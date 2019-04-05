@@ -1,21 +1,22 @@
-import { Player } from "../Player/Player";
 import { sample } from "lodash"; 
+
+import { Player } from "../Player/Player";
+import { Attack } from "../interfaces/interfaces";
 
 export class Party {
 
-  private members: Player[];
+  private partyMembers: Player[];
 
   constructor(members: Player[]) {
-    this.members = members;
+    this.partyMembers = members;
   }
 
   getRandomMember (): Player {
     return sample(this.members);
   }
 
-  attackAllMembers (damage: number): void {
-    this.members.forEach((member: Player) => {
-      member.damagePlayer(damage);
-    } )
+  public get members() : Player[] {
+    return this.partyMembers;
   }
+  
 }

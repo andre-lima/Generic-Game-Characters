@@ -1,3 +1,6 @@
+import { Attack } from "../interfaces/interfaces";
+import { Combat } from "../Combat/Combat";
+
 export abstract class Player {
 
   // Character properties
@@ -32,9 +35,18 @@ export abstract class Player {
     this.playerHealth = newHealth;
   }
 
-  public damagePlayer(damage: number): void {
-    this.health = this.health - damage;
+  public sufferAttack(attack: Attack): number {
+    this.health = this.health - attack.damage;
     console.log(this.playerName, 'ouch', this.health);
+    return attack.damage; // Update with value after reducers from armor, etc...
+  }
+
+  public attack(combatSession: Combat, target: Player, attack: Attack): number {
+    return combatSession.attackPlayer(this, target, attack);
+  }
+
+  public attackMultiplePlayers(combatSession: Combat, targets: Player[], attack: Attack): number {
+    return combatSession.attackMultiplePlayers(this, targets, attack);
   }
 
   public healPlayer(healing: number): void {
