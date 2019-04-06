@@ -3,17 +3,26 @@ import { Combat } from "../Combat/Combat";
 
 export abstract class Player {
 
-  // Character properties
+  // Object properties
   private characterImage: string;
 
-  // Game properties
+  //////// Player properties
+
+  // Character sheet
   private playerName: string;
   private playerType: string;
   private playerHealth: number;
-  private playerDefense: number;
-  private playerSpecial: number;
-  private playerExperience: number;
+  private maxHealth: number;
+  private playerDefense: number = 10;
   private playerLevel: number;
+
+  // Special Attack
+  private playerSpecial: number;
+  private specialCharge: number;
+  
+  // State
+  private dead: boolean = false;
+
 
   constructor(imageSource: string, 
               name: string, 
@@ -25,7 +34,7 @@ export abstract class Player {
     this.playerHealth = health;
   }
 
-  abstract specialAttack(): void;
+  protected abstract specialAttack(): void;
 
   public get health(): number {
     return this.playerHealth;
@@ -35,26 +44,63 @@ export abstract class Player {
     this.playerHealth = newHealth;
   }
 
-  public sufferAttack(attack: Attack): number {
-    this.health = this.health - attack.damage;
-    console.log(this.playerName, 'ouch', this.health);
-    return attack.damage; // Update with value after reducers from armor, etc...
+  public get isDead(): boolean {
+    return this.isDead;
   }
 
-  public attack(combatSession: Combat, target: Player, attack: Attack): number {
-    return combatSession.attackPlayer(this, target, attack);
+  public attack(target: Player | Player[], attack: Attack): number {
+    if (Array.isArray(target)) {
+      return this.attackMultiplePlayers(target, attack);
+    } else {
+      return this.attackSinglePlayer(target, attack);
+    }
   }
 
-  public attackMultiplePlayers(combatSession: Combat, targets: Player[], attack: Attack): number {
-    return combatSession.attackMultiplePlayers(this, targets, attack);
-  }
+  public heal(healing: number): void {
+    if (this.dead) return;
 
-  public healPlayer(healing: number): void {
     this.health = this.health + healing;
     console.log(this.playerName, 'yay', this.health);
   }
 
-  showPlayer (displayId: string): void {
+  public healOtherPlayer(healing: number, target: Player): void {
+    target.health = target.health + healing;
+    console.log(target.playerName, 'yay', target.health);
+  }
+
+  public receiveAttack(attack: Attack, attacker: Player): number {
+    if (this.dead) return;
+
+    this.health = this.health - Math.max(attack.damage - this.playerDefense, 0);
+    console.log(this.playerName, 'ouch', this.health);
+
+    if (this.health <= 0) {
+      this.health = 0;
+      this.die();
+    }
+    return attack.damage; // Update with value after reducers from armor, etc...
+  }
+
+  private attackSinglePlayer(target: Player, attack: Attack): number {
+    return target.receiveAttack(attack, this);
+  }
+
+  
+  private attackMultiplePlayers(targets: Player[], attack: Attack): number {
+    let totalDamage = 0;
+    targets.forEach((target) => {
+      totalDamage += target.receiveAttack(attack, this);
+    })
+
+    return totalDamage;
+  }
+
+  private die(): void {
+    console.log(this, 'is dead!');
+    this.dead = true;
+  }
+
+  private showPlayer (displayId: string): void {
     let element: Element = document.getElementById(displayId);
     const imgElement = document.createElement('img');
     imgElement.src = this.characterImage;
