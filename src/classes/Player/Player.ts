@@ -1,5 +1,4 @@
 import { Attack } from "../interfaces/interfaces";
-import { Combat } from "../Combat/Combat";
 
 export abstract class Player {
 
@@ -15,6 +14,7 @@ export abstract class Player {
   private maxHealth: number;
   private playerDefense: number = 10;
   private playerLevel: number;
+  private isLeader: boolean;
 
   // Special Attack
   private playerSpecial: number;
@@ -27,11 +27,13 @@ export abstract class Player {
   constructor(imageSource: string, 
               name: string, 
               type: string, 
-              health: number) {
+              health: number,
+              leader: boolean) {
     this.characterImage = imageSource;
     this.playerName = name;
     this.playerType = type;
     this.playerHealth = health;
+    this.isLeader = leader;
   }
 
   protected abstract specialAttack(): void;
@@ -100,8 +102,7 @@ export abstract class Player {
     this.dead = true;
   }
 
-  private showPlayer (displayId: string): void {
-    let element: Element = document.getElementById(displayId);
+  public renderPlayer (element: Element): void {
     const imgElement = document.createElement('img');
     imgElement.src = this.characterImage;
     element.append(imgElement);

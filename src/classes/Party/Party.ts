@@ -1,7 +1,5 @@
-import { sample } from "lodash"; 
-
+import { sample, remove } from "lodash"; 
 import { Player } from "../Player/Player";
-import { Attack } from "../interfaces/interfaces";
 
 export class Party {
 
@@ -17,6 +15,17 @@ export class Party {
 
   public get members() : Player[] {
     return this.partyMembers;
+  }
+
+  public placeMembers(element: Element) {
+
+    // Putting leaders on the middle of the party
+    const leaders = remove(this.members, (member) => member.isLeader);
+    this.members.splice(Math.floor(this.members.length / 2), 0, ...leaders);
+
+    this.members.forEach((member) => {
+      member.renderPlayer(element);
+    });
   }
   
 }
