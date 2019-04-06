@@ -27,5 +27,11 @@ export class Party {
       member.renderPlayer(element);
     });
   }
+
+  public update() {
+    this.members.forEach((member) => {
+      member.update();
+    });
+  }
   
 }

@@ -41,3 +41,9 @@ enemy2.heal(33);
 
 const combat = new Combat(goodParty, badParty);
 combat.placePlayers('game');
+
+
+setInterval(() => {
+  goodParty.update();
+  badParty.update();
+}, 33);

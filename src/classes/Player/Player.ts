@@ -1,4 +1,5 @@
 import { Attack } from "../interfaces/interfaces";
+import { Controls } from "../Controls/Controls";
 
 export abstract class Player {
 
@@ -23,6 +24,11 @@ export abstract class Player {
   // State
   private dead: boolean = false;
 
+  // Render
+  private element: Element;
+  private healthBar: Element;
+  private controls: Element;
+
 
   constructor(imageSource: string, 
               name: string, 
@@ -34,6 +40,8 @@ export abstract class Player {
     this.playerType = type;
     this.playerHealth = health;
     this.isLeader = leader;
+
+    this.controls = new Controls(this).createControls();
   }
 
   protected abstract specialAttack(): void;
@@ -50,7 +58,15 @@ export abstract class Player {
     return this.isDead;
   }
 
-  public attack(target: Player | Player[], attack: Attack): number {
+  public attack(target?: Player | Player[], attack?: Attack): number {
+    if (!target) {
+      target = this; // TODO: Get random target
+    }
+
+    if (!attack) {
+      attack = {damage: 22, type: 'normal'}; // TODO: Get default attack
+    }
+
     if (Array.isArray(target)) {
       return this.attackMultiplePlayers(target, attack);
     } else {
@@ -103,9 +119,25 @@ export abstract class Player {
   }
 
   public renderPlayer (element: Element): void {
+    const playerElement = document.createElement('div');
+
     const imgElement = document.createElement('img');
+    this.healthBar = document.createElement('p');
     imgElement.src = this.characterImage;
-    element.append(imgElement);
+
+    playerElement.append(imgElement);
+    playerElement.append(this.healthBar);
+    playerElement.append(this.controls);
+
+    element.append(playerElement);
+  }
+
+  public UpdateParameters () {
+    this.healthBar.innerHTML = this.health.toString();
+  }
+
+  public update() {
+    this.UpdateParameters();
   }
 
 }
