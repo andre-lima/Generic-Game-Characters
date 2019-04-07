@@ -4,12 +4,15 @@ import { Party } from "../Party/Party";
 
 export class Combat {
 
-  private myParty: Party;
+  private heroesParty: Party;
   private enemyParty: Party;
 
   constructor(yourParty: Party, enemyParty: Party) {
-    this.myParty = yourParty;
+    this.heroesParty = yourParty;
     this.enemyParty = enemyParty;
+
+    this.heroesParty.setEnemyParties(this.enemyParty.members);
+    this.enemyParty.setEnemyParties(this.heroesParty.members);
   }
 
   public placePlayers(id: string) {
@@ -21,7 +24,7 @@ export class Combat {
     gameCanvas.appendChild(myPartySpot);
 
     this.enemyParty.placeMembers(enemiesSpot);
-    this.myParty.placeMembers(myPartySpot);
+    this.heroesParty.placeMembers(myPartySpot);
   }
 
 }
