@@ -11,6 +11,7 @@ export function playerTemplate(compilingData: any) {
       "</div>" + 
       "<div class='controls'>" + 
         "<button class='attackButton'>Attack</button>" + 
+        "<button class='specialButton'>Special!</button>" + 
       "</div>" + 
     "</div>";
 

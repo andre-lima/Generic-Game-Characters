@@ -33,6 +33,7 @@ export abstract class Player {
   private element: Element;
   private healthBarElement: Element;
   private attackButtonElement: Element;
+  private specialButtonElement: Element;
   private controls: Element;
 
   constructor(
@@ -166,8 +167,10 @@ export abstract class Player {
 
     this.healthBarElement = playerElement.getElementsByClassName('playerHealth')[0];
     this.attackButtonElement = playerElement.getElementsByClassName('attackButton')[0];
+    this.specialButtonElement = playerElement.getElementsByClassName('specialButton')[0];
 
     this.attackButtonElement.addEventListener('click', () => this.attack());
+    this.specialButtonElement.addEventListener('click', () => this.specialAttack());
 
     parentElement.append(playerElement);
   }
