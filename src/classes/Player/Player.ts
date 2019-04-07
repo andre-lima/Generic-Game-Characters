@@ -1,6 +1,9 @@
 import { Attack } from "../interfaces/interfaces";
-import { playerTemplate } from "./PlayerTemplate";
+import { playerTemplate } from "./player.template";
 import { Party } from "../Party/Party";
+import { Inventory } from "../Inventory/Inventory";
+import { normalSword } from "../Inventory/items/sword.item";
+import { normalArmor } from "../Inventory/items/armor.item";
 
 export abstract class Player {
   //////// Player properties
@@ -10,13 +13,16 @@ export abstract class Player {
   private playerType: string;
   private playerHealth: number;
   private maxHealth: number;
-  private playerDefense: number = 10;
+  private playerDefense: number;
   private playerLevel: number;
   private isLeader: boolean;
 
   // Special Attack
-  private playerSpecial: number;
+  private maxSpecial: number;
   private specialCharge: number;
+
+  // Inventory
+  protected inventory: Inventory;
 
   // State
   private dead: boolean = false;
@@ -34,21 +40,29 @@ export abstract class Player {
     name: string,
     type: string,
     health: number,
-    leader: boolean
+    special: number,
+    leader: boolean = false
   ) {
     this.characterImage = imageSource;
     this.playerName = name;
     this.playerType = type;
+
     this.playerHealth = health;
+    this.maxHealth = health;
+
+    this.specialCharge = special;
     this.isLeader = leader;
   }
 
-  protected abstract specialAttack(): void;
 
-  private init() {
+  protected init() {
+    this.maxSpecial = this.specialCharge;
+    this.maxHealth = this.playerHealth;
 
+    this.inventory = new Inventory();
   }
 
+  // Getters and Setters
   public get health(): number {
     return this.playerHealth;
   }
@@ -65,14 +79,25 @@ export abstract class Player {
     this.myParty = party;
   }
 
+  // Attack logic
+  public regularAttack(): Attack {
+    return this.inventory.weapon;
+  }
+
+  protected abstract specialAttack(): void;
+
   public attack(target?: Player | Player[], attack?: Attack): number {
     if (!target) {
       target = this.myParty.getRandomEnemy();
-      console.log(target)
+
+      if(!target) {
+        return 0;
+      }
     }
 
     if (!attack) {
-      attack = { damage: 22, type: "normal" }; // TODO: Get default attack
+      attack = this.regularAttack(); // TODO: Get default attack
+      console.log(attack)
     }
 
     if (Array.isArray(target)) {
@@ -80,31 +105,6 @@ export abstract class Player {
     } else {
       return this.attackSinglePlayer(target, attack);
     }
-  }
-
-  public heal(healing: number): void {
-    if (this.dead) return;
-
-    this.health = this.health + healing;
-    console.log(this.playerName, "yay", this.health);
-  }
-
-  public healOtherPlayer(healing: number, target: Player): void {
-    target.health = target.health + healing;
-    console.log(target.playerName, "yay", target.health);
-  }
-
-  public receiveAttack(attack: Attack, attacker: Player): number {
-    if (this.dead) return;
-
-    this.health = this.health - Math.max(attack.damage - this.playerDefense, 0);
-    console.log(this.playerName, "ouch", this.health);
-
-    if (this.health <= 0) {
-      this.health = 0;
-      this.die();
-    }
-    return attack.damage; // Update with value after reducers from armor, etc...
   }
 
   private attackSinglePlayer(target: Player, attack: Attack): number {
@@ -120,11 +120,42 @@ export abstract class Player {
     return totalDamage;
   }
 
+  public receiveAttack(attack: Attack, attacker: Player): number {
+    if (this.dead) return;
+
+    const playerDefense = this.inventory.armor.defense;
+    console.log(playerDefense)
+
+    this.health = this.health - Math.max(attack.damage - playerDefense, 0);
+    console.log(this.playerName, "ouch", this.health);
+
+    if (this.health <= 0) {
+      this.health = 0;
+      this.die();
+    }
+    return attack.damage; // Update with value after reducers from armor, etc...
+  }
+
+  // Healing logic
+  public heal(healing: number): void {
+    if (this.dead) return;
+
+    this.health = this.health + healing;
+    console.log(this.playerName, "yay", this.health);
+  }
+
+  public healOtherPlayer(healing: number, target: Player): void {
+    target.health = target.health + healing;
+    console.log(target.playerName, "yay", target.health);
+  }
+
+  // Death logic
   private die(): void {
-    console.log(this, "is dead!");
+    console.log(this.playerName, "is dead!");
     this.dead = true;
   }
 
+  // Render logic
   public renderPlayer(parentElement: Element): void {
 
     const playerElement = document.createElement("div");
@@ -132,7 +163,10 @@ export abstract class Player {
     playerElement.innerHTML = playerTemplate({
       characterImage: this.characterImage,
       playerName: this.playerName,
-      playerHeath: this.health
+      playerHeath: this.health,
+      maxHealth: this.maxHealth,
+      specialCharge: this.specialCharge,
+      maxSpecial: this.maxSpecial
     });
 
     this.healthBarElement = playerElement.getElementsByClassName('playerHealth')[0];
@@ -144,7 +178,7 @@ export abstract class Player {
   }
 
   public UpdateParameters() {
-    this.healthBarElement.innerHTML = this.health.toString();
+    this.healthBarElement.innerHTML = `${this.health.toString()} / ${this.maxHealth.toString()} `;
   }
 
   public update() {

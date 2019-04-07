@@ -13,16 +13,15 @@ export class Party {
     });
   }
 
-  public setEnemyParties(members: Player[]) {
+  public setEnemyMembers(members: Player[]) {
     this.enemyMembers = members;
   }
 
-  getRandomMember(): Player {
+  public getRandomMember(): Player {
     return sample(this.members);
   }
 
-  getRandomEnemy(): Player {
-    console.log(sample(filter(this.enemyMembers, member => !member.isDead)));
+  public getRandomEnemy(): Player {
     return sample(filter(this.enemyMembers, member => !member.isDead));
   }
 

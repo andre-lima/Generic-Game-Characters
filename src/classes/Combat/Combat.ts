@@ -11,8 +11,8 @@ export class Combat {
     this.heroesParty = yourParty;
     this.enemyParty = enemyParty;
 
-    this.heroesParty.setEnemyParties(this.enemyParty.members);
-    this.enemyParty.setEnemyParties(this.heroesParty.members);
+    this.heroesParty.setEnemyMembers(this.enemyParty.members);
+    this.enemyParty.setEnemyMembers(this.heroesParty.members);
   }
 
   public placePlayers(id: string) {

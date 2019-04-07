@@ -6,7 +6,8 @@ export function playerTemplate(compilingData: any) {
       "<img src={{characterImage}} alt='' class='playerImage'>" + 
       "<div id='js_playerParameters' class='playerParameters'>" + 
         "<div class='playerName'>{{playerName}}</div>" + 
-        "<div class='playerHealth'>{{playerHealth}}</div>" + 
+        "<div class='playerHealth'>{{playerHealth}} / {{maxHealth}}</div>" + 
+        "<div class='playerSpacial'>{{specialCharge}} / {{maxSpecial}}</div>" + 
       "</div>" + 
       "<div class='controls'>" + 
         "<button class='attackButton'>Attack</button>" + 
