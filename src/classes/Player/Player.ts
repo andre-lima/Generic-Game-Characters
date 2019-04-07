@@ -1,5 +1,5 @@
 import { Attack } from "../interfaces/interfaces";
-import template from "./PlayerTemplate";
+import { playerTemplate } from "./PlayerTemplate";
 import { Party } from "../Party/Party";
 
 export abstract class Player {
@@ -129,7 +129,7 @@ export abstract class Player {
 
     const playerElement = document.createElement("div");
 
-    playerElement.innerHTML = template({
+    playerElement.innerHTML = playerTemplate({
       characterImage: this.characterImage,
       playerName: this.playerName,
       playerHeath: this.health

@@ -1,6 +1,6 @@
 import handlebars from "handlebars";
 
-export default function playerTemplate(compilingData: any) {
+export function playerTemplate(compilingData: any) {
   
   var source = "<div class='player'>" + 
       "<img src={{characterImage}} alt='' class='playerImage'>" + 
