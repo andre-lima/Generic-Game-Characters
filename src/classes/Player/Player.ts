@@ -82,12 +82,20 @@ export abstract class Player {
 
   // Attack logic
   public regularAttack(): Attack {
-    return this.inventory.weapon;
+    return {
+      damage: this.inventory.weapon.damage,
+      type: this.inventory.weapon.type
+    }
   }
 
-  protected abstract specialAttack(): void;
+  protected abstract specialAttack(): Attack;
 
   public attack(target?: Player | Player[], attack?: Attack): number {
+
+    if (!attack) {
+      attack = this.regularAttack(); // TODO: Get default attack
+    }
+
     if (!target) {
       target = this.myParty.getRandomEnemy();
 
@@ -96,15 +104,20 @@ export abstract class Player {
       }
     }
 
-    if (!attack) {
-      attack = this.regularAttack(); // TODO: Get default attack
-    }
-
     if (Array.isArray(target)) {
       return this.attackMultiplePlayers(target, attack);
     } else {
       return this.attackSinglePlayer(target, attack);
     }
+  }
+
+  public attackWithSpecial(target?: Player | Player[]): number {
+
+    const attack: Attack = this.specialAttack();
+
+    attack.areaAttack ? target = this.myParty.enemyMembers : target = this.myParty.getRandomEnemy();
+
+    return this.attack(target, attack);
   }
 
   private attackSinglePlayer(target: Player, attack: Attack): number {
@@ -170,7 +183,7 @@ export abstract class Player {
     this.specialButtonElement = playerElement.getElementsByClassName('specialButton')[0];
 
     this.attackButtonElement.addEventListener('click', () => this.attack());
-    this.specialButtonElement.addEventListener('click', () => this.specialAttack());
+    this.specialButtonElement.addEventListener('click', () => this.attackWithSpecial());
 
     parentElement.append(playerElement);
   }

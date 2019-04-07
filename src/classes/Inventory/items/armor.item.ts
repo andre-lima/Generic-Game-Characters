@@ -1,5 +1,6 @@
-export const normalArmor = {
+import { Armor } from "../../interfaces/interfaces";
+
+export const normalArmor: Armor = {
   defense: 20,
-  type: "normal",
-  image: ""
+  type: "normal"
 };

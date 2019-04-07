@@ -2,8 +2,8 @@ import { sample, remove, filter } from "lodash";
 import { Player } from "../Player/Player";
 
 export class Party {
-  private partyMembers: Player[];
-  private enemyMembers: Player[];
+  public partyMembers: Player[];
+  public enemyMembers: Player[];
 
   constructor(members: Player[]) {
     this.partyMembers = members;

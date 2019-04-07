@@ -2,8 +2,12 @@ import { Player } from "../Player/Player";
 import { Attack } from "../interfaces/interfaces";
 import { normalSword } from "../Inventory/items/sword.item";
 import { normalArmor } from "../Inventory/items/armor.item";
+import { powerAttack } from "../Specials/powerAttack.special";
 
 export class Orc extends Player {
+
+  private powerAttack: Attack;
+
   constructor(
     image: string,
     name: string,
@@ -21,9 +25,12 @@ export class Orc extends Player {
     super.init();
 
     this.inventory.weapon = normalSword;
+    
+    this.powerAttack = powerAttack(this, this.inventory.weapon, 2);
   }
 
-  public specialAttack(): void {
-    console.log("SPECIAL ATTACKKKKKKK!!!!");
+  public specialAttack(): Attack {
+    console.log("Power Attack!", this.powerAttack);
+    return this.powerAttack;
   }
 }
