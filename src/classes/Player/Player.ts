@@ -97,7 +97,6 @@ export abstract class Player {
 
     if (!attack) {
       attack = this.regularAttack(); // TODO: Get default attack
-      console.log(attack)
     }
 
     if (Array.isArray(target)) {
@@ -124,10 +123,8 @@ export abstract class Player {
     if (this.dead) return;
 
     const playerDefense = this.inventory.armor.defense;
-    console.log(playerDefense)
 
     this.health = this.health - Math.max(attack.damage - playerDefense, 0);
-    console.log(this.playerName, "ouch", this.health);
 
     if (this.health <= 0) {
       this.health = 0;
@@ -141,12 +138,10 @@ export abstract class Player {
     if (this.dead) return;
 
     this.health = this.health + healing;
-    console.log(this.playerName, "yay", this.health);
   }
 
   public healOtherPlayer(healing: number, target: Player): void {
     target.health = target.health + healing;
-    console.log(target.playerName, "yay", target.health);
   }
 
   // Death logic
