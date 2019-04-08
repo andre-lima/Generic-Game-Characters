@@ -1,12 +1,17 @@
-import { Weapon, Attack } from "../interfaces/interfaces";
+import { Weapon, Special } from "../interfaces/interfaces";
 
-export function powerAttack(weapon: Weapon, multiplier: number): Attack {
+export function powerAttack(weapon: Weapon, multiplier: number): Special {
 
-  const specialAttack: Attack = {
-    damage: weapon.damage * multiplier,
-    type: weapon.type,
-    areaAttack: false,
-    usageDepletion: 40
+  const specialAttack: Special = {
+    effect: "attack",
+    modifier: weapon.modifier,
+    areaEffect: false,
+    usageDepletion: 40,
+    execute: () => {
+      console.log('executing')
+    }
+    // damage: weapon.damage * multiplier,
+
   }
 
   return specialAttack;

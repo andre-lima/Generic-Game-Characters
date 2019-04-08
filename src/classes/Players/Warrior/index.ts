@@ -1,12 +1,10 @@
 import { Player } from "../Player";
-import { Attack } from "../../interfaces/interfaces";
+import { Attack, Special } from "../../interfaces/interfaces";
 import { normalSword } from "../../Inventory/items/sword.item";
 import { normalArmor } from "../../Inventory/items/armor.item";
 import { powerAttack } from "../../Specials/powerAttack.special";
 
 export class Warrior extends Player {
-
-  private powerAttack: Attack;
 
   constructor(
     image: string,
@@ -26,10 +24,7 @@ export class Warrior extends Player {
     this.inventory.weapon = normalSword;
     this.inventory.armor = normalArmor;
 
-    this.powerAttack = powerAttack(this.inventory.weapon, 3);
+    super.specialPower = powerAttack(this.inventory.weapon, 3);
   }
 
-  public specialAttack(): Attack {
-    return this.powerAttack;
-  }
 }

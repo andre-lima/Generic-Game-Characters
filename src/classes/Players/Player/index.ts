@@ -1,4 +1,4 @@
-import { Attack } from "../../interfaces/interfaces";
+import { Attack, Special } from "../../interfaces/interfaces";
 import { playerTemplate } from "./player.template";
 import { Party } from "../../Party";
 import { Inventory } from "../../Inventory";
@@ -16,6 +16,7 @@ export abstract class Player {
   private isLeader: boolean;
 
   // Special Attack
+  public specialPower: Special;
   private maxSpecial: number;
   private specialCharge: number;
 
@@ -81,11 +82,9 @@ export abstract class Player {
   public regularAttack(): Attack {
     return {
       damage: this.inventory.weapon.damage,
-      type: this.inventory.weapon.type
+      modifier: this.inventory.weapon.modifier
     }
   }
-
-  protected abstract specialAttack(): Attack;
 
   public attack(target?: Player | Player[], attack?: Attack): number {
 
@@ -108,20 +107,20 @@ export abstract class Player {
     }
   }
 
-  public attackWithSpecial(target?: Player | Player[]): number {
+  public useSpecial(target?: Player | Player[]): number {
 
-    const attack: Attack = this.specialAttack();
+    this.specialPower.execute();
 
-    if (attack.usageDepletion > this.specialCharge) {
-      console.log('not enough mana!');
-      return 0;
-    }
+    // if (attack.usageDepletion > this.specialCharge) {
+    //   console.log('not enough mana!');
+    //   return 0;
+    // }
 
-    this.specialCharge -= attack.usageDepletion;
+    // this.specialCharge -= attack.usageDepletion;
 
-    attack.areaAttack ? target = this.myParty.enemyMembers : target = this.myParty.getRandomEnemy();
+    // attack.areaAttack ? target = this.myParty.enemyMembers : target = this.myParty.getRandomEnemy();
 
-    return this.attack(target, attack);
+    return 0 //this.attack(target, attack);
   }
 
   private attackSinglePlayer(target: Player, attack: Attack): number {
@@ -194,7 +193,7 @@ export abstract class Player {
     this.chargeButtonElement = playerElement.getElementsByClassName('chargeSpecialButton')[0];
 
     this.attackButtonElement.addEventListener('click', () => this.attack());
-    this.specialButtonElement.addEventListener('click', () => this.attackWithSpecial());
+    this.specialButtonElement.addEventListener('click', () => this.useSpecial());
     this.chargeButtonElement.addEventListener('click', () => this.chargeSpecial(20));
 
     parentElement.append(playerElement);
