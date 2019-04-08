@@ -6,8 +6,6 @@ import { powerAttack } from "../../Specials/powerAttack.special";
 
 export class Orc extends Player {
 
-  private powerAttack: Attack;
-
   constructor(
     image: string,
     name: string,
@@ -26,10 +24,7 @@ export class Orc extends Player {
 
     this.inventory.weapon = normalSword;
     
-    this.powerAttack = powerAttack(this.inventory.weapon, 2);
+    this.specialPower = powerAttack;
   }
 
-  public specialAttack(): Attack {
-    return this.powerAttack;
-  }
 }

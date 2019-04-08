@@ -1,12 +1,9 @@
 import { Player } from "../Player";
-import { Attack } from "../../interfaces/interfaces";
 import { normalMace } from "../../Inventory/items/mace.item";
 import { normalArmor } from "../../Inventory/items/armor.item";
 import { heal } from "../../Specials/heal.special";
 
-export class Wizard extends Player {
-
-  private special: Attack;
+export class Cleric extends Player {
 
   constructor(
     image: string,
@@ -26,10 +23,7 @@ export class Wizard extends Player {
     this.inventory.weapon = normalMace;
     this.inventory.armor = normalArmor;
 
-    this.special = heal();
+    this.specialPower = heal;
   }
 
-  public specialAttack(): Attack {
-    return this.special;
-  }
 }

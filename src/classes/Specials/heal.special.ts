@@ -1,13 +1,15 @@
-import { Attack } from "../interfaces/interfaces";
+export function heal(): void {
+  
+  const usageDepletion = 40;
+  const healingPower = 50;
 
-export function heal(): any {
+  if (this.specialCharge < usageDepletion)
+    return;
 
-  function specialAttack() {
-    // damage: 50,
-    // type: 'fire',
-    // areaAttack: true,
-    // usageDepletion: 50
-  }
+  this.specialCharge -= usageDepletion;
 
-  return specialAttack;
+  this.myParty.members.forEach(member => {
+    member.heal(healingPower);
+  });
+
 };

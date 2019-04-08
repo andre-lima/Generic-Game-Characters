@@ -13,11 +13,6 @@ export interface Attack extends damageModifiers, specialEffects {
   usageDepletion?: number;
 }
 
-export interface Special extends damageModifiers, specialEffects {
-  areaEffect: false,
-  usageDepletion: 40,
-  execute(): void;
-}
 
 export interface Weapon extends damageModifiers {
   damage: number;

@@ -1,4 +1,4 @@
-import { Attack, Special } from "../../interfaces/interfaces";
+import { Attack } from "../../interfaces/interfaces";
 import { playerTemplate } from "./player.template";
 import { Party } from "../../Party";
 import { Inventory } from "../../Inventory";
@@ -16,7 +16,7 @@ export abstract class Player {
   private isLeader: boolean;
 
   // Special Attack
-  public specialPower: Special;
+  public specialPower: any;
   private maxSpecial: number;
   private specialCharge: number;
 
@@ -109,18 +109,9 @@ export abstract class Player {
 
   public useSpecial(target?: Player | Player[]): number {
 
-    this.specialPower.execute();
+    this.specialPower();
 
-    // if (attack.usageDepletion > this.specialCharge) {
-    //   console.log('not enough mana!');
-    //   return 0;
-    // }
-
-    // this.specialCharge -= attack.usageDepletion;
-
-    // attack.areaAttack ? target = this.myParty.enemyMembers : target = this.myParty.getRandomEnemy();
-
-    return 0 //this.attack(target, attack);
+    return 0;
   }
 
   private attackSinglePlayer(target: Player, attack: Attack): number {
@@ -159,7 +150,7 @@ export abstract class Player {
   public heal(healing: number): void {
     if (this.dead) return;
 
-    this.health = this.health + healing;
+    this.health = Math.min(this.health + healing, this.maxHealth);
   }
 
   public healOtherPlayer(healing: number, target: Player): void {
