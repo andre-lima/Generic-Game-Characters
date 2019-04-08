@@ -32,9 +32,10 @@ export abstract class Player {
   private characterImage: string;
   private element: Element;
   private healthBarElement: Element;
+  private specialBarElement: Element;
   private attackButtonElement: Element;
   private specialButtonElement: Element;
-  private controls: Element;
+  private chargeButtonElement: Element;
 
   constructor(
     imageSource: string,
@@ -51,14 +52,12 @@ export abstract class Player {
     this.playerHealth = health;
     this.maxHealth = health;
 
-    this.specialCharge = special;
+    this.maxSpecial = special;
     this.isLeader = leader;
   }
 
-
   protected init() {
-    this.maxSpecial = this.specialCharge;
-    this.maxHealth = this.playerHealth;
+    this.specialCharge = 0;
 
     this.inventory = new Inventory();
   }
@@ -115,6 +114,13 @@ export abstract class Player {
 
     const attack: Attack = this.specialAttack();
 
+    if (attack.usageDepletion > this.specialCharge) {
+      console.log('not enough mana!');
+      return 0;
+    }
+
+    this.specialCharge -= attack.usageDepletion;
+
     attack.areaAttack ? target = this.myParty.enemyMembers : target = this.myParty.getRandomEnemy();
 
     return this.attack(target, attack);
@@ -131,6 +137,11 @@ export abstract class Player {
     });
 
     return totalDamage;
+  }
+
+  private chargeSpecial (amount: number): void {
+    console.log('charging ', amount);
+    this.specialCharge = Math.min(this.specialCharge + amount, this.maxSpecial);
   }
 
   public receiveAttack(attack: Attack, attacker: Player): number {
@@ -179,17 +190,21 @@ export abstract class Player {
     });
 
     this.healthBarElement = playerElement.getElementsByClassName('playerHealth')[0];
+    this.specialBarElement = playerElement.getElementsByClassName('playerSpecial')[0];
     this.attackButtonElement = playerElement.getElementsByClassName('attackButton')[0];
     this.specialButtonElement = playerElement.getElementsByClassName('specialButton')[0];
+    this.chargeButtonElement = playerElement.getElementsByClassName('chargeSpecialButton')[0];
 
     this.attackButtonElement.addEventListener('click', () => this.attack());
     this.specialButtonElement.addEventListener('click', () => this.attackWithSpecial());
+    this.chargeButtonElement.addEventListener('click', () => this.chargeSpecial(2));
 
     parentElement.append(playerElement);
   }
 
   public UpdateParameters() {
     this.healthBarElement.innerHTML = `${this.health.toString()} / ${this.maxHealth.toString()} `;
+    this.specialBarElement.innerHTML = `${this.specialCharge.toString()} / ${this.maxSpecial.toString()} `;
   }
 
   public update() {

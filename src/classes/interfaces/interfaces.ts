@@ -2,15 +2,16 @@ export interface Attack {
   damage: number;
   type: string;
   effect?: string;
-  areaAttack?: boolean
+  areaAttack?: boolean;
+  usageDepletion?: number;
 }
 
 export interface Weapon {
-  damage: number,
-  type?: "normal"
+  damage: number;
+  type?: "normal";
 }
 
 export interface Armor {
-  defense: number,
-  type?: "normal"
+  defense: number;
+  type?: "normal";
 }
