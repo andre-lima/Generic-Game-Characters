@@ -1,4 +1,5 @@
 import { Warrior } from "./classes/Warrior/Warrior";
+import { Wizard } from "./classes/Wizard/Wizard";
 import { Party } from "./classes/Party/Party";
 import characterImages from "./images/characters/*.jpg";
 import { Combat } from "./classes/Combat/Combat";
@@ -18,21 +19,21 @@ const warrior2 = new Warrior(
   100, 
   50,
 );
-const warrior3 = new Warrior(
+const wizard1 = new Wizard(
   characterImages.warrior2,
   "girl power",
-  "warrior",
-  100, 
-  50,
+  "wizard",
+  60, 
+  100,
   true
 );
 
-const enemy1 = new Warrior(characterImages.orc, "EVEEELLLL", "warrior", 70, 50);
+const enemy1 = new Orc(characterImages.orc, "EVEEELLLL", "warrior", 70, 50);
 const enemy2 = new Orc(characterImages.orc, "BADDDD", "warrior", 70, 50);
 const enemy3 = new Orc(characterImages.orc, "UGLYYYYY", "warrior", 100, 50, true);
 const enemy4 = new Orc(characterImages.orc, "BLERGH", "warrior", 100, 50, true);
 
-const goodParty = new Party([warrior1, warrior2, warrior3]);
+const goodParty = new Party([warrior1, warrior2, wizard1]);
 const badParty = new Party([enemy1, enemy2, enemy3, enemy4]);
 
 // warrior2.healPlayer(55);

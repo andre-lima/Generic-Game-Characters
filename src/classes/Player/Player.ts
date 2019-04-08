@@ -197,7 +197,7 @@ export abstract class Player {
 
     this.attackButtonElement.addEventListener('click', () => this.attack());
     this.specialButtonElement.addEventListener('click', () => this.attackWithSpecial());
-    this.chargeButtonElement.addEventListener('click', () => this.chargeSpecial(2));
+    this.chargeButtonElement.addEventListener('click', () => this.chargeSpecial(20));
 
     parentElement.append(playerElement);
   }
