@@ -8,10 +8,10 @@ export interface Attack {
 
 export interface Weapon {
   damage: number;
-  type?: "normal";
+  type?: "normal" | "holy" | "fire" | "cold" | "poison" ;
 }
 
 export interface Armor {
   defense: number;
-  type?: "normal";
+  protectionAgainst?: "holy" | "fire" | "cold" | "poison";
 }

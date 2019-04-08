@@ -1,8 +1,8 @@
-import { Player } from "../Player/Player";
-import { Attack } from "../interfaces/interfaces";
-import { normalSword } from "../Inventory/items/sword.item";
-import { normalArmor } from "../Inventory/items/armor.item";
-import { powerAttack } from "../Specials/powerAttack.special";
+import { Player } from "../Player";
+import { Attack } from "../../interfaces/interfaces";
+import { normalSword } from "../../Inventory/items/sword.item";
+import { normalArmor } from "../../Inventory/items/armor.item";
+import { powerAttack } from "../../Specials/powerAttack.special";
 
 export class Orc extends Player {
 
@@ -26,7 +26,7 @@ export class Orc extends Player {
 
     this.inventory.weapon = normalSword;
     
-    this.powerAttack = powerAttack(this, this.inventory.weapon, 2);
+    this.powerAttack = powerAttack(this.inventory.weapon, 2);
   }
 
   public specialAttack(): Attack {

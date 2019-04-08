@@ -1,26 +1,26 @@
-import { Warrior } from "./classes/Warrior/Warrior";
-import { Wizard } from "./classes/Wizard/Wizard";
-import { Party } from "./classes/Party/Party";
-import characterImages from "./images/characters/*.jpg";
-import { Combat } from "./classes/Combat/Combat";
-import { Orc } from "./classes/Orc/Orc";
+import { Warrior } from "./classes/Players/Warrior";
+import { Wizard } from "./classes/Players/Wizard";
+import { Party } from "./classes/Party";
+import characterImages from "./images/characters/*.*";
+import { Combat } from "./classes/Combat";
+import { Orc } from "./classes/Players/Orc";
 
 const warrior1 = new Warrior(
-  characterImages.warrior1,
+  characterImages.warrior1.jpg,
   "dude awesome",
   "warrior",
   100, 
   50,
 );
 const warrior2 = new Warrior(
-  characterImages.warrior1,
+  characterImages.warrior1.jpg,
   "mehdude",
   "warrior",
   100, 
   50,
 );
 const wizard1 = new Wizard(
-  characterImages.warrior2,
+  characterImages.wizard.gif,
   "girl power",
   "wizard",
   60, 
@@ -28,10 +28,10 @@ const wizard1 = new Wizard(
   true
 );
 
-const enemy1 = new Orc(characterImages.orc, "EVEEELLLL", "warrior", 70, 50);
-const enemy2 = new Orc(characterImages.orc, "BADDDD", "warrior", 70, 50);
-const enemy3 = new Orc(characterImages.orc, "UGLYYYYY", "warrior", 100, 50, true);
-const enemy4 = new Orc(characterImages.orc, "BLERGH", "warrior", 100, 50, true);
+const enemy1 = new Orc(characterImages.orc.jpg, "EVEEELLLL", "warrior", 70, 50);
+const enemy2 = new Orc(characterImages.orc.jpg, "BADDDD", "warrior", 70, 50);
+const enemy3 = new Orc(characterImages.orc.jpg, "UGLYYYYY", "warrior", 100, 50, true);
+const enemy4 = new Orc(characterImages.orc.jpg, "BLERGH", "warrior", 100, 50, true);
 
 const goodParty = new Party([warrior1, warrior2, wizard1]);
 const badParty = new Party([enemy1, enemy2, enemy3, enemy4]);

@@ -1,6 +1,4 @@
-import { Player } from "../Player/Player";
-import { Attack } from "../interfaces/interfaces";
-import { Party } from "../Party/Party";
+import { Party } from "../Party";
 
 export class Combat {
 

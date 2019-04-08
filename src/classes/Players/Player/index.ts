@@ -1,9 +1,7 @@
-import { Attack } from "../interfaces/interfaces";
+import { Attack } from "../../interfaces/interfaces";
 import { playerTemplate } from "./player.template";
-import { Party } from "../Party/Party";
-import { Inventory } from "../Inventory/Inventory";
-import { normalSword } from "../Inventory/items/sword.item";
-import { normalArmor } from "../Inventory/items/armor.item";
+import { Party } from "../../Party";
+import { Inventory } from "../../Inventory";
 
 export abstract class Player {
   //////// Player properties

@@ -1,8 +1,8 @@
-import { Player } from "../Player/Player";
-import { Attack } from "../interfaces/interfaces";
-import { normalStaff } from "../Inventory/items/staff.item";
-import { normalRobe } from "../Inventory/items/robe.item";
-import { fireBall } from "../Specials/fireBall.special";
+import { Player } from "../Player";
+import { Attack } from "../../interfaces/interfaces";
+import { normalMace } from "../../Inventory/items/mace.item";
+import { normalArmor } from "../../Inventory/items/armor.item";
+import { heal } from "../../Specials/heal.special";
 
 export class Wizard extends Player {
 
@@ -23,10 +23,10 @@ export class Wizard extends Player {
   protected init() {
     super.init();
 
-    this.inventory.weapon = normalStaff;
-    this.inventory.armor = normalRobe;
+    this.inventory.weapon = normalMace;
+    this.inventory.armor = normalArmor;
 
-    this.special = fireBall();
+    this.special = heal();
   }
 
   public specialAttack(): Attack {
