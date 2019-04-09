@@ -66,4 +66,4 @@ setInterval(() => {
   goodParty.update();
   badParty.update();
   combat.update();
-}, 330);
+}, 100);

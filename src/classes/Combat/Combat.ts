@@ -16,7 +16,7 @@ export class Combat {
     this.battleActive = true;
   }
 
-  public placePlayers(id: string) {
+  public placePlayers(id: string): void {
     const gameCanvas = document.getElementById(id);
     const enemiesSpot = document.createElement('div');
     const myPartySpot = document.createElement('div');
@@ -28,8 +28,7 @@ export class Combat {
     this.heroesParty.placeMembers(myPartySpot);
   }
 
-  private checkEndOfBattle() {
-console.log(this.battleActive)
+  private checkEndOfBattle(): void {
     if (this.battleActive) {
       if (this.heroesParty.areAllMembersDead()) {
         console.log('ENEMIES victory');
@@ -43,7 +42,7 @@ console.log(this.battleActive)
     }
   }
 
-  public update() {
+  public update(): void {
     this.checkEndOfBattle();
   }
 

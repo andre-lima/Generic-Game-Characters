@@ -1,5 +1,8 @@
 TODO
+---------------------------
+
 # Generic Players
+Define character sheet in a config json
 
 ## Characters
 Warrior - High health and mid damage
@@ -16,18 +19,30 @@ Special damage increases
 Loot/Shopping system
 Damage increases
 Defense increases
+x Grab loot and modal asks if you want to switch
 
 ### Special attacks
 Warrior - Super attack (+ Increase group morale)
-Mage - Fireball (+ Lightning)
+Mage - Fireball (+ Protective Barrier)
 Rogue - Paralysing attacks (+ Special breaking)
-Cleric - Protective Spell (+ Reviving)
+Cleric - Healing (+ Reviving)
 
 ## Enemies
 Orcs
 Dragons
 Giant Bats
 Slime
+Skeleton
+Zombie
+
+## Combate
+When it finishes, handles winner/loser
 
 ## Currency
+x Money for the Party
+x Define money drop for each player (min, max and percentage)
+
+
+## Display
+x Confirmation modal (with a template and callback to continue the action once it's confirmed)
 
