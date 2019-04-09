@@ -1,23 +1,25 @@
 
-interface specialEffects {
-  effect?: "attack" | "healing" | "protection";
+interface DamageModifiers {
+  damageType?: "none" | "holy" | "fire" | "cold" | "poison" | "stun";
 }
 
-interface damageModifiers {
-  modifier?: "none" | "holy" | "fire" | "cold" | "poison" ;
+export interface ProtectionAgainst extends DamageModifiers {
+  damageReduction?: number ; // Between 0 and 1
 }
 
-export interface Attack extends damageModifiers, specialEffects {
-  damage: number;
-  areaAttack?: boolean;
-  usageDepletion?: number;
+export interface ClassWeakness extends DamageModifiers {
+  damageIncrease?: number; // Between 0 and 1
 }
 
-
-export interface Weapon extends damageModifiers {
+export interface Attack extends DamageModifiers {
   damage: number;
 }
 
-export interface Armor {
+
+export interface Weapon extends DamageModifiers {
+  damage: number;
+}
+
+export interface Armor extends ProtectionAgainst {
   defense: number;
 }

@@ -1,13 +1,18 @@
 import { Attack } from "../interfaces/interfaces";
 
-export function fireBall(): Attack {
+export function fireBall(usageDepletion: number = 70, damage: number = 30): void {
+
+  if (this.specialCharge < usageDepletion)
+    return;
+
+  const target = this.myParty.enemyMembers;
 
   const specialAttack: Attack = {
-    damage: 50,
-    type: 'fire',
-    areaAttack: true,
-    usageDepletion: 50
+    damage: damage,
+    damageType: "fire"
   }
 
-  return specialAttack;
+  this.specialCharge -= usageDepletion;
+
+  this.attack(target, specialAttack);
 };

@@ -29,6 +29,10 @@ export class Party {
     return this.partyMembers;
   }
 
+  public get enemies(): Player[] {
+    return this.enemyMembers;
+  }
+
   public placeMembers(element: Element) {
     // Putting leaders on the middle of the party
     const leaders = remove(this.members, member => member.isLeader);

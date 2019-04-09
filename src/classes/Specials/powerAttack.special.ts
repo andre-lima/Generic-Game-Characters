@@ -1,15 +1,17 @@
-export function powerAttack(): void {
-  
-  const usageDepletion = 40;
-  const damageMultiplier = 3;
-  const target = this.myParty.getRandomEnemy();
+import { Attack } from "../interfaces/interfaces";
 
-  const specialAttack = {
-    damage: this.inventory.weapon.damage * damageMultiplier,
-  }
+export function powerAttack(usageDepletion: number = 50, multiplier: number = 2): void {
 
   if (this.specialCharge < usageDepletion)
     return;
+
+  const damageMultiplier = multiplier;
+  const target = this.myParty.getRandomEnemy();
+
+  const specialAttack: Attack = {
+    damage: this.inventory.weapon.damage * damageMultiplier,
+    damageType: this.inventory.weapon.damageType
+  }
 
   this.specialCharge -= usageDepletion;
 

@@ -1,10 +1,10 @@
-import { Warrior } from "./classes/Players/Warrior";
-import { Wizard } from "./classes/Players/Wizard";
-import { Cleric } from "./classes/Players/Cleric";
-import { Party } from "./classes/Party";
-import characterImages from "./images/characters/*.*";
+import { Warrior } from "./classes/Heroes/Warrior";
+import { Wizard } from "./classes/Heroes/Wizard";
+import { Cleric } from "./classes/Heroes/Cleric";
+import { Party } from "./classes/Party/Party";
 import { Combat } from "./classes/Combat";
-import { Orc } from "./classes/Players/Orc";
+import { Orc } from "./classes/Enemies/Orc";
+import characterImages from "./images/characters/*.*";
 
 const warrior1 = new Warrior(
   characterImages.warrior1.jpg,

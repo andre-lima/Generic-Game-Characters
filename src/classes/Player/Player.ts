@@ -1,7 +1,7 @@
-import { Attack } from "../../interfaces/interfaces";
-import { playerTemplate } from "./player.template";
-import { Party } from "../../Party";
-import { Inventory } from "../../Inventory";
+import { Attack, ClassWeakness } from "../interfaces/interfaces";
+import { playerTemplate } from "./templates/player.template";
+import { Party } from "../Party/Party";
+import { Inventory } from "../Inventory";
 
 export abstract class Player {
   //////// Player properties
@@ -14,6 +14,7 @@ export abstract class Player {
   private playerDefense: number;
   private playerLevel: number;
   private isLeader: boolean;
+  public classWeakness: ClassWeakness = { damageType: "none" };
 
   // Special Attack
   public specialPower: any;
@@ -82,12 +83,11 @@ export abstract class Player {
   public regularAttack(): Attack {
     return {
       damage: this.inventory.weapon.damage,
-      modifier: this.inventory.weapon.modifier
-    }
+      damageType: this.inventory.weapon.damageType
+    };
   }
 
   public attack(target?: Player | Player[], attack?: Attack): number {
-
     if (!attack) {
       attack = this.regularAttack(); // TODO: Get default attack
     }
@@ -95,7 +95,7 @@ export abstract class Player {
     if (!target) {
       target = this.myParty.getRandomEnemy();
 
-      if(!target) {
+      if (!target) {
         return 0;
       }
     }
@@ -108,7 +108,6 @@ export abstract class Player {
   }
 
   public useSpecial(target?: Player | Player[]): number {
-
     this.specialPower();
 
     return 0;
@@ -127,23 +126,38 @@ export abstract class Player {
     return totalDamage;
   }
 
-  private chargeSpecial (amount: number): void {
-    console.log('charging ', amount);
+  private chargeSpecial(amount: number): void {
     this.specialCharge = Math.min(this.specialCharge + amount, this.maxSpecial);
   }
 
   public receiveAttack(attack: Attack, attacker: Player): number {
     if (this.dead) return;
 
-    const playerDefense = this.inventory.armor.defense;
+    const calculatedDamage = this.calculateDamage(attack);
 
-    this.health = this.health - Math.max(attack.damage - playerDefense, 0);
+    this.health = this.health - calculatedDamage;
 
     if (this.health <= 0) {
       this.health = 0;
       this.die();
     }
-    return attack.damage; // Update with value after reducers from armor, etc...
+    return calculatedDamage;
+  }
+
+  public calculateDamage(attack: Attack): number {
+    let finalDamage = attack.damage;
+
+    if (attack.damageType !== "none" && attack.damageType === this.classWeakness.damageType) {
+      finalDamage *= (1 + this.classWeakness.damageIncrease);
+    }
+
+    if (attack.damageType !== "none" && attack.damageType === this.inventory.armor.damageType) {
+      finalDamage *= (1 - this.inventory.armor.damageReduction);
+    }
+
+    finalDamage -= this.inventory.armor.defense;
+
+    return Math.max(Math.ceil(finalDamage), 0);
   }
 
   // Healing logic
@@ -165,7 +179,6 @@ export abstract class Player {
 
   // Render logic
   public renderPlayer(parentElement: Element): void {
-
     const playerElement = document.createElement("div");
 
     playerElement.innerHTML = playerTemplate({
@@ -177,15 +190,29 @@ export abstract class Player {
       maxSpecial: this.maxSpecial
     });
 
-    this.healthBarElement = playerElement.getElementsByClassName('playerHealth')[0];
-    this.specialBarElement = playerElement.getElementsByClassName('playerSpecial')[0];
-    this.attackButtonElement = playerElement.getElementsByClassName('attackButton')[0];
-    this.specialButtonElement = playerElement.getElementsByClassName('specialButton')[0];
-    this.chargeButtonElement = playerElement.getElementsByClassName('chargeSpecialButton')[0];
+    this.healthBarElement = playerElement.getElementsByClassName(
+      "playerHealth"
+    )[0];
+    this.specialBarElement = playerElement.getElementsByClassName(
+      "playerSpecial"
+    )[0];
+    this.attackButtonElement = playerElement.getElementsByClassName(
+      "attackButton"
+    )[0];
+    this.specialButtonElement = playerElement.getElementsByClassName(
+      "specialButton"
+    )[0];
+    this.chargeButtonElement = playerElement.getElementsByClassName(
+      "chargeSpecialButton"
+    )[0];
 
-    this.attackButtonElement.addEventListener('click', () => this.attack());
-    this.specialButtonElement.addEventListener('click', () => this.useSpecial());
-    this.chargeButtonElement.addEventListener('click', () => this.chargeSpecial(20));
+    this.attackButtonElement.addEventListener("click", () => this.attack());
+    this.specialButtonElement.addEventListener("click", () =>
+      this.useSpecial()
+    );
+    this.chargeButtonElement.addEventListener("click", () =>
+      this.chargeSpecial(20)
+    );
 
     parentElement.append(playerElement);
   }

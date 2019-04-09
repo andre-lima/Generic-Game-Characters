@@ -1,8 +1,8 @@
-import { Player } from "../Player";
-import { Attack } from "../../interfaces/interfaces";
-import { normalSword } from "../../Inventory/items/sword.item";
-import { normalArmor } from "../../Inventory/items/armor.item";
-import { powerAttack } from "../../Specials/powerAttack.special";
+import { Player } from "../Player/Player";
+import { Attack } from "../interfaces/interfaces";
+import { normalSword } from "../Inventory/items/sword.item";
+import { normalArmor } from "../Inventory/items/armor.item";
+import { powerAttack } from "../Specials/powerAttack.special";
 
 export class Warrior extends Player {
 
@@ -24,7 +24,7 @@ export class Warrior extends Player {
     this.inventory.weapon = normalSword;
     this.inventory.armor = normalArmor;
 
-    this.specialPower = powerAttack;
+    this.specialPower = powerAttack.bind(this, 50, 2);
   }
 
 }

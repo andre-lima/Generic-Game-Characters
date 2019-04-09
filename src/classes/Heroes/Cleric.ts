@@ -1,10 +1,10 @@
-import { Player } from "../Player";
-import { normalMace } from "../../Inventory/items/mace.item";
-import { normalArmor } from "../../Inventory/items/armor.item";
-import { heal } from "../../Specials/heal.special";
+import { Player } from "../Player/Player";
+import { normalMace } from "../Inventory/items/mace.item";
+import { normalArmor } from "../Inventory/items/armor.item";
+import { heal } from "../Specials/heal.special";
 
 export class Cleric extends Player {
-
+  
   constructor(
     image: string,
     name: string,
@@ -23,7 +23,6 @@ export class Cleric extends Player {
     this.inventory.weapon = normalMace;
     this.inventory.armor = normalArmor;
 
-    this.specialPower = heal;
+    this.specialPower = heal.bind(this, 40, 50);
   }
-
 }
