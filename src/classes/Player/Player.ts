@@ -58,6 +58,7 @@ export abstract class Player {
 
   protected init() {
     this.specialCharge = 0;
+    this.specialPower = null;
 
     this.inventory = new Inventory();
   }
@@ -186,40 +187,34 @@ export abstract class Player {
       playerName: this.playerName,
       playerHeath: this.health,
       maxHealth: this.maxHealth,
+      hasSpecial: !!this.specialPower,
       specialCharge: this.specialCharge,
       maxSpecial: this.maxSpecial
     });
 
-    this.healthBarElement = playerElement.getElementsByClassName(
-      "playerHealth"
-    )[0];
-    this.specialBarElement = playerElement.getElementsByClassName(
-      "playerSpecial"
-    )[0];
-    this.attackButtonElement = playerElement.getElementsByClassName(
-      "attackButton"
-    )[0];
-    this.specialButtonElement = playerElement.getElementsByClassName(
-      "specialButton"
-    )[0];
-    this.chargeButtonElement = playerElement.getElementsByClassName(
-      "chargeSpecialButton"
-    )[0];
+    this.healthBarElement = playerElement.getElementsByClassName("playerHealth")[0];
+    this.specialBarElement = playerElement.getElementsByClassName("playerSpecial")[0];
+    this.attackButtonElement = playerElement.getElementsByClassName("attackButton")[0];
 
     this.attackButtonElement.addEventListener("click", () => this.attack());
-    this.specialButtonElement.addEventListener("click", () =>
-      this.useSpecial()
-    );
-    this.chargeButtonElement.addEventListener("click", () =>
-      this.chargeSpecial(20)
-    );
+console.log(!!this.specialPower, this)
+    if (!!this.specialPower) {
+      this.specialButtonElement = playerElement.getElementsByClassName("specialButton")[0];
+      this.chargeButtonElement = playerElement.getElementsByClassName("chargeSpecialButton")[0];
+
+      this.specialButtonElement.addEventListener("click", () => this.useSpecial());
+      this.chargeButtonElement.addEventListener("click", () => this.chargeSpecial(20));
+    }
 
     parentElement.append(playerElement);
   }
 
   public UpdateParameters() {
     this.healthBarElement.innerHTML = `${this.health.toString()} / ${this.maxHealth.toString()} `;
-    this.specialBarElement.innerHTML = `${this.specialCharge.toString()} / ${this.maxSpecial.toString()} `;
+
+    if (this.specialBarElement) {
+      this.specialBarElement.innerHTML = `${this.specialCharge.toString()} / ${this.maxSpecial.toString()} `;
+    }
   }
 
   public update() {

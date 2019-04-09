@@ -1,14 +1,12 @@
 import { Player } from "../Player/Player";
 import { ClassWeakness } from "../interfaces/interfaces";
-import { normalSword } from "../Inventory/items/sword.item";
-import { normalArmor } from "../Inventory/items/armor.item";
-import { powerAttack } from "../Specials/powerAttack.special";
+import { normalClub } from "../Inventory/items/club.item";
 
-export class Orc extends Player {
+export class Skeleton extends Player {
   
   public classWeakness: ClassWeakness = {
     damageType: "holy",
-    damageIncrease: 0.3
+    damageIncrease: 0.8
   };
 
   constructor(
@@ -27,8 +25,6 @@ export class Orc extends Player {
   protected init() {
     super.init();
 
-    this.inventory.weapon = normalSword;
-
-    this.specialPower = powerAttack.bind(this, 50, 1.5);
+    this.inventory.weapon = normalClub;
   }
 }

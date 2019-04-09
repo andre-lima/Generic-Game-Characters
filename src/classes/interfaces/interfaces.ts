@@ -4,7 +4,7 @@ interface DamageModifiers {
 }
 
 export interface ProtectionAgainst extends DamageModifiers {
-  damageReduction?: number ; // Between 0 and 1
+  damageReduction?: number; // Between 0 and 1
 }
 
 export interface ClassWeakness extends DamageModifiers {

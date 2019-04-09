@@ -7,12 +7,12 @@ export function playerTemplate(compilingData: any) {
       "<div id='js_playerParameters' class='playerParameters'>" + 
         "<div class='playerName'>{{playerName}}</div>" + 
         "<div class='playerHealth'>{{playerHealth}} / {{maxHealth}}</div>" + 
-        "<div class='playerSpecial'>{{specialCharge}} / {{maxSpecial}}</div>" + 
+        "{{#if hasSpecial}}<div class='playerSpecial'>{{specialCharge}} / {{maxSpecial}}</div>{{/if}}" + 
       "</div>" + 
       "<div class='controls'>" + 
         "<button class='attackButton'>Attack</button>" + 
-        "<button class='specialButton'>Special!</button>" + 
-        "<button class='chargeSpecialButton'>Charge</button>" + 
+        "{{#if hasSpecial}}<button class='specialButton'>Special!</button>" + 
+        "<button class='chargeSpecialButton'>Charge</button>{{/if}}" + 
       "</div>" + 
     "</div>";
 
