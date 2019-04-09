@@ -7,6 +7,14 @@ export const enemies = {
     initialArmor: 'normalArmor',
     givesXp: 100
   },
+  skeleton: {
+    maxHealth: 40,
+    maxSpecial: 0,
+    imageSource: '',
+    initialWeapon: 'normalClub',
+    initialArmor: '',
+    givesXp: 30
+  },
   zombie: {
 
   },

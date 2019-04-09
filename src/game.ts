@@ -2,7 +2,7 @@ import { Warrior } from "./classes/Heroes/Warrior";
 import { Wizard } from "./classes/Heroes/Wizard";
 import { Cleric } from "./classes/Heroes/Cleric";
 import { Party } from "./classes/Party/Party";
-import { Combat } from "./classes/Combat";
+import { Combat } from "./classes/Combat/Combat";
 import { Orc } from "./classes/Enemies/Orc";
 import characterImages from "./images/characters/*.*";
 import { Skeleton } from "./classes/Enemies/Skeleton";
@@ -65,4 +65,5 @@ combat.placePlayers("game");
 setInterval(() => {
   goodParty.update();
   badParty.update();
-}, 33);
+  combat.update();
+}, 330);

@@ -11,24 +11,24 @@ export abstract class Player {
   private playerType: string;
   private playerHealth: number;
   private maxHealth: number;
-  private playerDefense: number;
   private playerLevel: number;
-  private isLeader: boolean;
+  public xp: number;
   public classWeakness: ClassWeakness = { damageType: "none" };
-
+  
   // Special Attack
   public specialPower: any;
   private maxSpecial: number;
   private specialCharge: number;
-
+  
   // Inventory
   protected inventory: Inventory;
-
+  
   // State
   private dead: boolean = false;
   private myParty: Party;
-
+  
   // Render
+  private isLeader: boolean;
   private characterImage: string;
   private element: Element;
   private healthBarElement: Element;
@@ -175,7 +175,9 @@ export abstract class Player {
   // Death logic
   private die(): void {
     console.log(this.playerName, "is dead!");
+
     this.dead = true;
+    this.myParty.removeDeadMember(this);
   }
 
   // Render logic
@@ -197,7 +199,7 @@ export abstract class Player {
     this.attackButtonElement = playerElement.getElementsByClassName("attackButton")[0];
 
     this.attackButtonElement.addEventListener("click", () => this.attack());
-console.log(!!this.specialPower, this)
+
     if (!!this.specialPower) {
       this.specialButtonElement = playerElement.getElementsByClassName("specialButton")[0];
       this.chargeButtonElement = playerElement.getElementsByClassName("chargeSpecialButton")[0];

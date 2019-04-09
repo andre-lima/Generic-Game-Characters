@@ -1,9 +1,10 @@
-import { Party } from "../Party";
+import { Party } from "../Party/Party";
 
 export class Combat {
 
   private heroesParty: Party;
   private enemyParty: Party;
+  private battleActive: boolean;
 
   constructor(yourParty: Party, enemyParty: Party) {
     this.heroesParty = yourParty;
@@ -11,6 +12,8 @@ export class Combat {
 
     this.heroesParty.setEnemyMembers(this.enemyParty.members);
     this.enemyParty.setEnemyMembers(this.heroesParty.members);
+
+    this.battleActive = true;
   }
 
   public placePlayers(id: string) {
@@ -23,6 +26,25 @@ export class Combat {
 
     this.enemyParty.placeMembers(enemiesSpot);
     this.heroesParty.placeMembers(myPartySpot);
+  }
+
+  private checkEndOfBattle() {
+console.log(this.battleActive)
+    if (this.battleActive) {
+      if (this.heroesParty.areAllMembersDead()) {
+        console.log('ENEMIES victory');
+        this.battleActive = false;
+      } else if (this.enemyParty.areAllMembersDead()) {
+        console.log('HEROES victory');
+        this.battleActive = false;
+      }
+    } else {
+      console.log('END OF BATTLE');
+    }
+  }
+
+  public update() {
+    this.checkEndOfBattle();
   }
 
 }

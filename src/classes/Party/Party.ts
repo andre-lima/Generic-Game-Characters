@@ -3,10 +3,14 @@ import { Player } from "../Player/Player";
 
 export class Party {
   public partyMembers: Player[];
+  public alivePartyMembers: Player[];
+
   public enemyMembers: Player[];
+  public aliveEnemyMembers: Player[];
 
   constructor(members: Player[]) {
-    this.partyMembers = members;
+    this.partyMembers = [...members];
+    this.alivePartyMembers = [...members];
 
     this.partyMembers.forEach(member => {
       member.party = this;
@@ -31,6 +35,16 @@ export class Party {
 
   public get enemies(): Player[] {
     return this.enemyMembers;
+  }
+
+  public removeDeadMember(member: Player): void {
+    this.alivePartyMembers = this.alivePartyMembers.filter((member) => {
+      return !member.isDead;
+    })
+  }
+
+  public areAllMembersDead(): boolean {
+    return !this.alivePartyMembers.length;
   }
 
   public placeMembers(element: Element) {
