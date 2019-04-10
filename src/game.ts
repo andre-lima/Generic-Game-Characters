@@ -63,8 +63,26 @@ const badParty = new Party([enemy1, enemy2, enemy3, enemy4]);
 const combat = new Combat(goodParty, badParty);
 combat.placePlayers("game");
 
+const success_cb = (p) => {
+  console.log('success', p)
+}
+
+const cancel_cb = () => {
+  console.log('cancel')
+}
+
+const stuff_cb = () => {
+  console.log('stuff')
+}
+
 const dialogBox = new DialogBox();
-dialogBox.showDialogBox('New item', 'Check this new item out!');
+const dialogActions = [
+  { text: 'Confirm', callback: success_cb.bind(this, wizard1), closeModal: true },
+  { text: 'Cancel', callback: cancel_cb, closeModal: true },
+  { text: 'Stuff', callback: stuff_cb, closeModal: false },
+];
+dialogBox.showDialogBox('New item', 'Check this new item out!', dialogActions);
+
 
 setInterval(() => {
   goodParty.update();

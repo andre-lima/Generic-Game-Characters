@@ -21,8 +21,6 @@
   
     @if $has-overlay {
       background-color: $default-modal-overlay;
-    } @else {
-      pointer-events: none;
     }
     
     // Modal content
