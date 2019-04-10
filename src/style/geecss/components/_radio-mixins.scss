@@ -1,0 +1,73 @@
+@mixin radio ($radio-size: $radio-size, $mark-size: $radio-mark-size) {
+
+    // $radio-mark-content: " ";
+    // $radio-size: 20px;
+    // $radio-bg-color: #aaa;
+    // $radio-bg-color-hover: darken($checkbox-bg-color, 10%);
+    // $radio-bg-color-selected: #ff4136;
+    // $radio-bg-color-selected-hover: darken($checkbox-bg-color-selected, 10%);
+    // $radio-border-size: 0px;
+    // $radio-border-color: #000;
+    // $radio-border-radius: 3px;
+    // $radio-mark-color: #fff;
+
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+  
+  /* Hide the browser's default radio button */
+  input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+  }
+  
+  /* Create a custom radio button */
+  .handle {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 24px;
+      width: 24px;
+      background-color: #eee;
+      border-radius: 50%;
+      border: 2px solid red;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  &:hover input ~ .handle {
+      background-color: #ccc;
+  }
+  
+  /* When the radio button is checked, add a blue background */
+  input:checked ~ .handle {
+      background-color: #2196F3;
+  }
+  
+  /* Create the indicator (the dot/circle - hidden when not checked) */
+  .handle:after {
+      content: "";
+      position: absolute;
+      display: none;
+  }
+  
+  /* Show the indicator (dot/circle) when checked */
+  input:checked  ~ .handle:after {
+      display: block;
+  }
+  
+  /* Style the indicator (dot/circle) */
+  .handle:after {
+    @include center-element;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: white;
+  }
+
+}
+

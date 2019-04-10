@@ -4,8 +4,9 @@ import { Cleric } from "./classes/Heroes/Cleric";
 import { Party } from "./classes/Party/Party";
 import { Combat } from "./classes/Combat/Combat";
 import { Orc } from "./classes/Enemies/Orc";
-import characterImages from "./images/characters/*.*";
 import { Skeleton } from "./classes/Enemies/Skeleton";
+import { DialogBox } from "./services/view/dialogBox.service";
+import characterImages from "./images/characters/*.*";
 
 const warrior1 = new Warrior(
   characterImages.warrior1.jpg,
@@ -61,6 +62,9 @@ const badParty = new Party([enemy1, enemy2, enemy3, enemy4]);
 
 const combat = new Combat(goodParty, badParty);
 combat.placePlayers("game");
+
+const dialogBox = new DialogBox();
+dialogBox.showDialogBox('New item', 'Check this new item out!');
 
 setInterval(() => {
   goodParty.update();

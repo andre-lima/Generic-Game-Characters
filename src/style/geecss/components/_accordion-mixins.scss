@@ -1,0 +1,23 @@
+@mixin accordion ($content-height: auto, $content-class: "accordion-content") {
+  input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+  }
+  
+  .accordion-title {
+    cursor: pointer;
+    position: relative;
+    display: block;
+  }
+  
+  #{"." + $content-class} {
+    height: 0;
+    overflow: hidden;
+    transition: .3s all; // Apply animation if $content-height is different than 'auto'
+  }
+
+  .accordion-toggle:checked ~ #{"." + $content-class} {
+    height: $content-height;
+  }
+
+}

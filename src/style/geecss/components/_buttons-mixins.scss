@@ -1,0 +1,27 @@
+@mixin button ($size: regular, $style: regular, $hover-darken: 10%, $active-darken: 20%) {
+
+    cursor: pointer;
+    
+    @if (map-has-key($map: $button-sizes, $key: $size)) {
+        padding: map-get($map: $button-sizes, $key: "padding");
+        font-size: map-get($map: $button-sizes, $key: $size);
+    }
+
+    @if (map-has-key($map: $button-colors, $key: $style)) {
+        $color: nth(map-get($map: $button-colors, $key: $style), 1);
+        $bg-color: nth(map-get($map: $button-colors, $key: $style), 2);
+        
+        color: $color;
+        background-color: $bg-color;
+        
+        &:hover {
+            background-color: darken($bg-color, $hover-darken);
+        }
+        
+        &:active {
+            background-color: darken($bg-color, $active-darken);
+        }
+    }
+
+    @content;
+}

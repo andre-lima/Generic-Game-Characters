@@ -1,0 +1,88 @@
+
+// https://css-tricks.com/snippets/sass/mixin-offset-positioning/
+/// Shorthand mixin for offset positioning
+/// @param {String} $position - Either `relative`, `absolute` or `fixed`
+/// @param {Length} $top [null] - Top offset
+/// @param {Length} $right [null] - Right offset
+/// @param {Length} $bottom [null] - Bottom offset
+/// @param {Length} $left [null] - Left offset
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+  position: $position;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+@mixin absolute($args...) {
+  @include position(absolute, $args...);
+}
+
+@mixin relative($args...) {
+  @include position(relative, $args...);
+}
+
+@mixin fixed($args...) {
+  @include position(fixed, $args...);
+}
+
+@mixin center-block {
+  margin: { 
+    left: auto;
+    right: auto;
+  }
+}
+
+@mixin z-index($arg) {
+  z-index: z($arg);
+}
+
+@mixin push-next-down($spacing-bottom: $components-bottom-spacing) {
+  margin-bottom: $spacing-bottom;
+}
+
+@mixin flex($jc: null, $ai: null, $wrap: wrap, $direction: null, $child-grow: null) {
+  display: flex;
+  flex-wrap: $wrap;
+  justify-content: $jc;
+  align-items: $ai;
+  flex-direction: $direction;
+
+  & > * {
+    flex-grow: $child-grow;
+  }
+
+}
+
+@mixin vertical-center-children () {
+  align-items: center;
+}
+
+@mixin center-children-flex {
+  @include flex($jc: center, $ai: center);
+}
+
+@mixin horizontal-center-element {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin vertical-center-element {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin center-element {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin hide-element {
+  position: absolute;
+  left: -9999px;
+}
+
+@mixin equal-height() {
+  // Create mixin
+}

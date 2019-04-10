@@ -1,0 +1,6 @@
+// A panel has a title (first-child) and a content (:not(:first-child))
+@mixin panel-header ($bg-color: $default-panel-bg-color, $spacing: 0.75em) {
+  background-color: $bg-color;
+  padding: $spacing;
+  @content;
+}

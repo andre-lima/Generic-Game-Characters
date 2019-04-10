@@ -1,0 +1,81 @@
+// Set column width, similar to a grid system, but more flexible
+@mixin symetric-wrap ($num-elements, $wrap-width, $gap: $default-gap-size) {
+
+  display: flex;
+  @include add-gap($gap);
+
+  @if is-even($num-elements) {
+    &>* {
+      $items-per-line: $num-elements;
+      $i: 1;
+
+      $item-width: (100 / $items-per-line)#{"%"};
+      flex-basis: calc(#{$item-width} - #{2 * $gap});
+      flex-grow: 1;
+
+      @while $items-per-line>1 {
+        $wrap-threshold: $items-per-line * $wrap-width;
+
+        $i: $i + 1;
+        $items-per-line: $num-elements / $i;
+
+        // If items-per-line is not a divisor of num-elements, recalculate items-per-line until finding a divisor
+        // ex: If num-elements is 6, items-per-line can only be 6, 3, 2 and 1
+        @while not is-integer($items-per-line) {
+          $i: $i + 1;
+          $items-per-line: $num-elements / $i;
+        }
+
+        @include mq($wrap-threshold, max) {
+          $item-width: (100 / $items-per-line)#{"%"};
+          flex-basis: calc(#{$item-width} - #{2 * $gap});
+        }
+
+      }
+    }
+  }
+
+  @else {
+    &>* {
+      @include grid-column(1, $num-elements, calc(#{$wrap-width} - #{2 * $gap}));
+    }
+  }
+}
+
+@mixin add-icon($source-image, $color: currentColor, $width: auto, $height: auto) {
+  &:after {
+    content: url($source-image);
+    width: $width;
+    height: $height;
+    color: $color;
+  }
+}
+
+@mixin backboard($color: #fff, $opacity: 0.5, $box-padding: 1em) {
+  background-color: rgba($color, $opacity);
+  padding: $box-padding;
+}
+
+@mixin add-corner-icon($spacing: 0, $size: inherit, $color: currentColor) {
+  @include absolute;
+  cursor: pointer;
+  color: $color;
+  font-size: $size;
+  padding: $spacing;
+  right: $spacing;
+}
+
+@mixin wrap-mode () {
+  //wrapped takes 100% of space
+  //wrapped keeps width
+  //only wrap pairs
+}
+
+@mixin border($width: 1px, $color: black, $type: solid, $radius: $default-border-radius) {
+  border: make-border($width, $color, $type);
+  border-radius: $radius;
+}
+
+@mixin round {
+  border-radius: 5em;
+}

@@ -1,0 +1,37 @@
+
+@mixin modal ($has-overlay: true, $max-width: null, $bg-overlay: $default-modal-overlay, $modal-shadow: $default-modal-shadow, $modal-padding: $default-modal-padding) {
+
+    @at-root {
+      body.#{$default-modal-open-class} {
+        overflow: hidden;
+      }
+    }
+  
+    &:not(.#{$default-modal-open-class}) {
+      display: none;
+    }
+    
+    @include fixed($top: 0, $left: 0);
+    @include center-children-flex;
+    @include z-index(modal);
+    
+    font-size: inherit;
+    width: 100vw;
+    height: 100vh;
+  
+    @if $has-overlay {
+      background-color: $default-modal-overlay;
+    } @else {
+      pointer-events: none;
+    }
+    
+    // Modal content
+    & > * {
+      max-width: $max-width;
+      padding: $modal-padding;
+      box-shadow: $default-modal-shadow;
+      background-color: white;
+      @content;
+    }
+
+  }

@@ -1,0 +1,29 @@
+// Usually, bottom margin will mess things up, like a component flow.
+// But when we need text to behave like actual text (e.g like in an longer article) we can reapply some bototm padding
+// based on its font-size (ems).
+@mixin text-spacing ($spacing: $space-xs) {
+  & > * {
+    margin-bottom: $spacing;
+  }
+}
+
+@mixin truncate($limit, $gradient-color: null) {
+  max-width: $limit;
+  white-space: nowrap;
+  overflow: hidden;
+
+  @if ($gradient-color) {
+    position: relative;
+
+    &:after {
+      content: "";
+      @include absolute($top: 0, $right: 0);
+      width: 50px;
+      height: 100%;
+      background: linear-gradient(to right, rgba($gradient-color, 0), $gradient-color 60%)
+    }
+  } @else {
+    text-overflow: ellipsis;
+  }
+
+}

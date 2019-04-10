@@ -1,0 +1,74 @@
+@mixin checkbox($box-size: $checkbox-size, $mark-size: $checkbox-mark-size, $custom-checkmark: $checkbox-mark-content, $custom-font: null) {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  padding-left: $box-size + 5px;
+  $is-custom: false;
+
+  @if ($custom-checkmark != " ") {
+    $is-custom: true;
+  }
+
+  input {
+    @include absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  span {
+    @include absolute($top: 0, $left: 0);
+    height: $box-size;
+    width: $box-size;
+    background-color: $checkbox-bg-color;
+    border-radius: $checkbox-border-radius;
+    @if ($checkbox-border-size != 0) {
+      @include border ($checkbox-border-size, $checkbox-border-color);
+    }
+  }
+
+  /* On mouse-over, add a grey background color */
+  &:hover input ~ span {
+    background-color: $checkbox-bg-color-hover;
+  }
+
+  /* When the checkbox is checked, add a blue background */
+  input:checked {
+    & ~ span {
+      background-color: $checkbox-bg-color-selected;
+      
+      
+      &:hover {
+        background-color: $checkbox-bg-color-selected-hover;
+      }
+      
+      /* Show the checkmark when checked */
+      &:after {
+        display: block;
+      }
+    }
+  }
+
+  /* Create the checkmark/indicator (hidden when not checked) */
+  span:after {
+    @include absolute;
+    @include center-element;
+    content: $custom-checkmark;
+    display: none;
+    color: $checkbox-mark-color;
+    border-radius: $checkbox-border-radius - 1px;
+
+    @if ($is-custom) {
+      font-family: $custom-font;
+
+    } @else {
+      width: 50%;
+      height: 50%;
+      background-color: $checkbox-mark-color;
+    }
+
+    @content;
+  }
+
+}

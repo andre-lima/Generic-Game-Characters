@@ -1,0 +1,50 @@
+@mixin menu ($is-horizontal: true, $text-align: left, $item-width: 150px) {
+
+  width: 100%;
+
+  @if ($is-horizontal) {
+    @include flex;
+  }
+
+  &>li {
+    text-align: $text-align;
+
+    @if ($is-horizontal) {
+      flex-basis: $item-width;
+    }
+
+    @else {
+      width: $item-width;
+    }
+
+    @include mq(tablet, max) {
+      // Trigger hamburger menu
+    }
+  }
+
+}
+
+@mixin hamburger() {
+  
+}
+
+@mixin has-dropdown ($top-offset: null, $left-offset: 0, $horizontally-center-dropdown: false) {
+  position: relative;
+  cursor: pointer;
+
+  & > *:not(:first-child) {
+    display: none;
+  }
+
+  &:hover {
+    > *:not(:first-child) {
+      display: block;
+      @include absolute($top: $top-offset, $left: $left-offset);
+      @include z-index(dropdown);
+
+      @if($horizontally-center-dropdown) {
+        @include horizontal-center-element;
+      }
+    }
+  }
+}

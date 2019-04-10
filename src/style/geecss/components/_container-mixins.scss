@@ -1,0 +1,22 @@
+@mixin basic-container($padding: $component-padding, $distance-from-sibling: $space-xs) {
+  padding: $padding;
+    
+  & > *:not(:last-child) {
+    @include push-next-down($distance-from-sibling);
+  }
+
+  @content;
+}
+
+@mixin limited-container($height: 100px) {
+  height: $height;
+  overflow-y: scroll;
+
+  @content;
+}
+
+@mixin blocks-container($margin-between-children: $space-xxs) {
+  @include add-gap($margin-between-children);
+
+  @content;
+}

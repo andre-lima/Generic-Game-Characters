@@ -3,7 +3,7 @@ import handlebars from "handlebars";
 export function playerTemplate(compilingData: any) {
   
   var source = "<div class='player'>" + 
-      "<img src={{characterImage}} alt='' class='playerImage hidden'>" + 
+      "<img src={{characterImage}} alt='' class='playerImage'>" + 
       "<div id='js_playerParameters' class='playerParameters'>" + 
         "<div class='playerName'>{{playerName}}</div>" + 
         "<div class='playerHealth'>{{playerHealth}} / {{maxHealth}}</div>" + 

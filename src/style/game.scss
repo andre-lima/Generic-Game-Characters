@@ -1,3 +1,10 @@
+@import './geecss/all';
+
+button {
+  @include button($size: small, $style: alert);
+  margin: $space-xs;
+}
+
 #game > div {
   display: flex;
   justify-content: center;
@@ -14,3 +21,10 @@
 .hidden {
   display: none;
 }
+
+.dialogBox {
+  @include modal($has-overlay: false, $max-width: 500px, $modal-padding: 20px) {
+      @include basic-container ($padding: null, $distance-from-sibling: 10px);
+  }
+}
+

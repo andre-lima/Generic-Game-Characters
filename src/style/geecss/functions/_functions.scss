@@ -1,0 +1,51 @@
+@function is-even($num) {
+  @return $num % 2 == 0;
+}
+
+@function is-integer($num) {
+  @return $num == round($num);
+}
+
+// Srtips the units from a value. e.g. 12px -> 12
+@function strip-units($val) {
+  @return ($val / ($val * 0 + 1));
+}
+
+@function is-number($value) {
+  @return type-of($value) == 'number';
+}
+
+@function z($key-or-value: null) {
+
+  $zindex: () !default;
+
+  @if ($key-or-value == null) {
+      @warn "You have to pass a key or a number value as the function parameter. (Ignoring property!)";
+
+  } @else {
+
+      @if is-number($key-or-value) {
+          @return $key-or-value;
+      }
+
+      @if ($zindex == ()) {
+          @warn "Create a map variable called $zindex with key/pair values: $zindex: (modal: 9000, overlay: 8000, dropdown: 7000, header: 6000, footer: 5000). (Ignoring property!)";
+
+      } @else {
+
+          @if map-has-key($zindex, $key-or-value) {
+              @return map-get($zindex,$key-or-value);
+          } @else {
+              @warn "Key " + $key-or-value + "does not exist on map. Use one of these keys: " + map-keys($map: $zindex) + ". (Ignoring property!)";
+          }
+
+      }
+
+  }
+
+  @return null;
+}
+
+@function make-border ($width: 1px, $color: black, $type: solid) {
+    @return $width $type $color;
+}

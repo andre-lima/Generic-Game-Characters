@@ -1,0 +1,60 @@
+// Button variables
+$button-regular-color : #000000 !default;
+$button-regular-bg    : #dddddd !default;
+$button-info-color    : #000000 !default;
+$button-info-bg       : #7fdbff !default;
+$button-alert-color   : #ffffff !default;
+$button-alert-bg      : #ff4136 !default;
+$button-warning-color : #000000 !default;
+$button-warning-bg    : #ffdc00 !default;
+
+$button-sizes: (
+    "regular" :  $text-md,
+    "large"   :  $text-xl,
+    "small"   :  $text-xs,
+    "padding" :  $space-xxs $space-md // Since we're using ems, we only need one variable for padding, since the text size will drive the actual padding values.
+) !default;
+
+$button-colors: (
+    "regular" :  ($button-regular-color $button-regular-bg),
+    "info"    :  ($button-info-color $button-info-bg),
+    "alert"   :  ($button-alert-color $button-alert-bg),
+    "warning" :  ($button-warning-color $button-warning-bg)
+) !default;
+
+// Carousel
+$carousel-height: 300px !default;
+
+// Checkbox variables
+$checkbox-mark-content             :  " ";
+$checkbox-size                     :  20px;
+$checkbox-bg-color                 :  #aaa;
+$checkbox-bg-color-hover           :  darken($checkbox-bg-color, 10%);
+$checkbox-bg-color-selected        :  #ff4136;
+$checkbox-bg-color-selected-hover  :  darken($checkbox-bg-color-selected, 10%);
+$checkbox-border-size              :  0px;
+$checkbox-border-color             :  #000;
+$checkbox-border-radius            :  3px;
+$checkbox-mark-color               :  #fff;
+$checkbox-mark-size                :  50%;
+
+// Checkbox variables
+$radio-mark-content             :  " ";
+$radio-size                     :  30px;
+$radio-bg-color                 :  #aaa;
+$radio-bg-color-hover           :  darken($checkbox-bg-color, 10%);
+$radio-bg-color-selected        :  #ff4136;
+$radio-bg-color-selected-hover  :  darken($checkbox-bg-color-selected, 10%);
+$radio-border-size              :  2px;
+$radio-border-color             :  #000;
+$radio-border-radius            :  50%;
+$radio-mark-color               :  #fff;
+$radio-mark-size                :  $radio-size - 5px;
+
+// Links variables
+
+
+// Menu variables
+
+
+

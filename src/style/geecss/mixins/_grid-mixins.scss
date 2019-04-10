@@ -1,0 +1,20 @@
+// Add gaps between child elements of a parent
+@mixin add-gap($gap: $default-gap-size) {
+  @if $gap > 0 {
+    margin: -$gap;
+    
+    & > * {
+      flex-shrink: 1;
+      margin: $gap;
+    }
+
+  }
+}
+  
+@mixin grid-column($element-takes, $num-of-cols: $default-grid-columns, $wrap-width: auto, $grow: 1) {
+  $width: (floor(100 * $element-takes * 100/ $num-of-cols) / 100)#{"%"};
+  flex-grow: $grow;
+  width: $width;
+  min-width: $wrap-width;
+}
+

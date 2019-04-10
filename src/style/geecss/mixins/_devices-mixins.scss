@@ -1,0 +1,21 @@
+@mixin mq($width, $type: min) {
+  @if (is_number($width)) {
+    $width: strip-units($width);
+    @media only screen and (#{$type}-width: $width + 'px') {
+      @content;
+    }
+  } @else {
+    @if map_has_key($breakpoints, $width) {
+      $width: map_get($breakpoints, $width);
+      @if $type == max {
+        $width: $width - 1px;
+      }
+      @media only screen and (#{$type}-width: $width) {
+        @content;
+      }
+    } @else {
+      @warn "The key " + $width + " doesn't exist on the $breakpoints map. Please use one of these: " + map-keys($map: $breakpoints);
+    }
+
+  }
+}
