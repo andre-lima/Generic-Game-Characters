@@ -53,7 +53,7 @@ export class Party {
     this.members.splice(Math.floor(this.members.length / 2), 0, ...leaders);
 
     this.members.forEach(member => {
-      member.renderPlayer(element);
+      member.render(element);
     });
   }
 

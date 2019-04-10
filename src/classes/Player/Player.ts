@@ -1,7 +1,8 @@
 import { Attack, ClassWeakness } from "../interfaces/interfaces";
-import { playerTemplate } from "./templates/player.template";
 import { Party } from "../Party/Party";
 import { Inventory } from "../Inventory";
+import { renderPlayer_DOM } from "./render/player.dom-renderer";
+
 
 export abstract class Player {
   //////// Player properties
@@ -14,6 +15,7 @@ export abstract class Player {
   private playerLevel: number;
   public xp: number;
   public classWeakness: ClassWeakness = { damageType: "none" };
+  private isLeader: boolean;
   
   // Special Attack
   public specialPower: any;
@@ -26,17 +28,10 @@ export abstract class Player {
   // State
   private dead: boolean = false;
   private myParty: Party;
-  
-  // Render
-  private isLeader: boolean;
-  private characterImage: string;
-  private element: Element;
-  private healthBarElement: Element;
-  private specialBarElement: Element;
-  private attackButtonElement: Element;
-  private specialButtonElement: Element;
-  private chargeButtonElement: Element;
 
+  // Render
+  private renderer: any;
+  
   constructor(
     imageSource: string,
     name: string,
@@ -45,7 +40,6 @@ export abstract class Player {
     special: number,
     leader: boolean = false
   ) {
-    this.characterImage = imageSource;
     this.playerName = name;
     this.playerType = type;
 
@@ -61,6 +55,8 @@ export abstract class Player {
     this.specialPower = null;
 
     this.inventory = new Inventory();
+
+    this.renderer = renderPlayer_DOM(this);
   }
 
   // Getters and Setters
@@ -142,6 +138,9 @@ export abstract class Player {
       this.health = 0;
       this.die();
     }
+
+    this.postEffects('damage');
+
     return calculatedDamage;
   }
 
@@ -178,48 +177,19 @@ export abstract class Player {
 
     this.dead = true;
     this.myParty.removeDeadMember(this);
+    
+    this.postEffects('death', 200);
+  }
+  
+  private postEffects(type: string, delay: number = 0): void {
+    this.renderer.renderPostEffects(type, delay);
   }
 
-  // Render logic
-  public renderPlayer(parentElement: Element): void {
-    const playerElement = document.createElement("div");
-
-    playerElement.innerHTML = playerTemplate({
-      characterImage: this.characterImage,
-      playerName: this.playerName,
-      playerHeath: this.health,
-      maxHealth: this.maxHealth,
-      hasSpecial: !!this.specialPower,
-      specialCharge: this.specialCharge,
-      maxSpecial: this.maxSpecial
-    });
-
-    this.healthBarElement = playerElement.getElementsByClassName("playerHealth")[0];
-    this.specialBarElement = playerElement.getElementsByClassName("playerSpecial")[0];
-    this.attackButtonElement = playerElement.getElementsByClassName("attackButton")[0];
-
-    this.attackButtonElement.addEventListener("click", () => this.attack());
-
-    if (!!this.specialPower) {
-      this.specialButtonElement = playerElement.getElementsByClassName("specialButton")[0];
-      this.chargeButtonElement = playerElement.getElementsByClassName("chargeSpecialButton")[0];
-
-      this.specialButtonElement.addEventListener("click", () => this.useSpecial());
-      this.chargeButtonElement.addEventListener("click", () => this.chargeSpecial(20));
-    }
-
-    parentElement.append(playerElement);
-  }
-
-  public UpdateParameters() {
-    this.healthBarElement.innerHTML = `${this.health.toString()} / ${this.maxHealth.toString()} `;
-
-    if (this.specialBarElement) {
-      this.specialBarElement.innerHTML = `${this.specialCharge.toString()} / ${this.maxSpecial.toString()} `;
-    }
+  public render(parentElement: Element) {
+    this.renderer.renderPlayer(parentElement);
   }
 
   public update() {
-    this.UpdateParameters();
+    this.renderer.updateParameters();
   }
 }

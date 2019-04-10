@@ -81,8 +81,7 @@ const dialogActions = [
   { text: 'Cancel', callback: cancel_cb, closeModal: true },
   { text: 'Stuff', callback: stuff_cb, closeModal: false },
 ];
-dialogBox.showDialogBox('New item', 'Check this new item out!', dialogActions);
-
+// dialogBox.showDialogBox('New item', 'Check this new item out!', dialogActions);
 
 setInterval(() => {
   goodParty.update();

@@ -27,7 +27,6 @@ export class DialogBox {
     document.body.appendChild(dialogElement)
 
     buttons.forEach(button => {
-      console.log(button, document.getElementById('dialogBox-button_' + button.id));
       document.getElementById('dialogBox-button_' + button.id).addEventListener('click', button.onClick);
     });
   }
