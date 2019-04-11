@@ -1,7 +1,7 @@
 import { Attack, ClassWeakness } from "../interfaces/interfaces";
 import { Party } from "../Party/Party";
 import { Inventory } from "../Inventory";
-import { renderPlayer_DOM } from "./render/player.dom-renderer";
+import { renderPlayer_DOM } from "./view/player.dom-renderer";
 
 
 export abstract class Player {
