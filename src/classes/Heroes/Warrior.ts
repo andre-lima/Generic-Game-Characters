@@ -1,11 +1,11 @@
-import { Player } from "../Player/Player";
+import { Character } from "../Character/Character";
 import { Attack } from "../interfaces/interfaces";
 import { normalSword } from "../Inventory/items/attack/sword.item";
 import { normalArmor } from "../Inventory/items/defense/armor.item";
 import { powerAttack } from "../Specials/powerAttack.special";
 import warriorImage from "../../images/characters/warrior.jpg";
 
-export class Warrior extends Player {
+export class Warrior extends Character {
 
   constructor(
     name: string,

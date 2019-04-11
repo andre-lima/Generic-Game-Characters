@@ -16,7 +16,7 @@ export class Combat {
     this.battleActive = true;
   }
 
-  public placePlayers(id: string): void {
+  public placeCharacters(id: string): void {
     const gameCanvas = document.getElementById(id);
     const enemiesSpot = document.createElement('div');
     const myPartySpot = document.createElement('div');

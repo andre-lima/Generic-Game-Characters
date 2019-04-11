@@ -1,19 +1,19 @@
 import { Attack, ClassWeakness } from "../interfaces/interfaces";
 import { Party } from "../Party/Party";
 import { Inventory } from "../Inventory/Inventory";
-import { renderPlayer_DOM } from "./view/player.dom-renderer";
+import { renderCharacter_DOM } from "./view/character.dom-renderer";
 
 
-export abstract class Player {
-  //////// Player properties
+export abstract class Character {
+  //////// Character properties
 
   // Character sheet
   public characterImage: string;
-  private playerName: string;
-  private playerType: string;
-  private playerHealth: number;
+  private characterName: string;
+  private characterType: string;
+  private characterHealth: number;
   private maxHealth: number;
-  private playerLevel: number;
+  private characterLevel: number;
   public xp: number;
   public classWeakness: ClassWeakness = { damageType: "none" };
   private isLeader: boolean;
@@ -42,11 +42,10 @@ export abstract class Player {
     leader: boolean = false
   ) {
     this.characterImage = imageSource;
-    console.log(this.characterImage);
-    this.playerName = name;
-    this.playerType = type;
+    this.characterName = name;
+    this.characterType = type;
 
-    this.playerHealth = health;
+    this.characterHealth = health;
     this.maxHealth = health;
 
     this.maxSpecial = special;
@@ -59,16 +58,16 @@ export abstract class Player {
 
     this.inventory = new Inventory();
 
-    this.renderer = new renderPlayer_DOM(this);
+    this.renderer = new renderCharacter_DOM(this);
   }
 
   // Getters and Setters
   public get health(): number {
-    return this.playerHealth;
+    return this.characterHealth;
   }
 
   public set health(newHealth: number) {
-    this.playerHealth = newHealth;
+    this.characterHealth = newHealth;
   }
 
   public get isDead(): boolean {
@@ -87,7 +86,7 @@ export abstract class Player {
     };
   }
 
-  public attack(target?: Player | Player[], attack?: Attack): number {
+  public attack(target?: Character | Character[], attack?: Attack): number {
     if (!attack) {
       attack = this.regularAttack(); // TODO: Get default attack
     }
@@ -101,23 +100,23 @@ export abstract class Player {
     }
 
     if (Array.isArray(target)) {
-      return this.attackMultiplePlayers(target, attack);
+      return this.attackMultipleCharacters(target, attack);
     } else {
-      return this.attackSinglePlayer(target, attack);
+      return this.attackSingleCharacter(target, attack);
     }
   }
 
-  public useSpecial(target?: Player | Player[]): number {
+  public useSpecial(target?: Character | Character[]): number {
     this.specialPower();
 
     return 0;
   }
 
-  private attackSinglePlayer(target: Player, attack: Attack): number {
+  private attackSingleCharacter(target: Character, attack: Attack): number {
     return target.receiveAttack(attack, this);
   }
 
-  private attackMultiplePlayers(targets: Player[], attack: Attack): number {
+  private attackMultipleCharacters(targets: Character[], attack: Attack): number {
     let totalDamage = 0;
     targets.forEach(target => {
       totalDamage += target.receiveAttack(attack, this);
@@ -130,7 +129,7 @@ export abstract class Player {
     this.specialCharge = Math.min(this.specialCharge + amount, this.maxSpecial);
   }
 
-  public receiveAttack(attack: Attack, attacker: Player): number {
+  public receiveAttack(attack: Attack, attacker: Character): number {
     if (this.dead) return;
 
     const calculatedDamage = this.calculateDamage(attack);
@@ -170,13 +169,13 @@ export abstract class Player {
     this.health = Math.min(this.health + healing, this.maxHealth);
   }
 
-  public healOtherPlayer(healing: number, target: Player): void {
+  public healOtherCharacter(healing: number, target: Character): void {
     target.health = target.health + healing;
   }
 
   // Death logic
   private die(): void {
-    console.log(this.playerName, "is dead!");
+    console.log(this.characterName, "is dead!");
 
     this.dead = true;
     this.myParty.removeDeadMember(this);
@@ -189,7 +188,7 @@ export abstract class Player {
   }
 
   public render(parentElement: Element) {
-    this.renderer.renderPlayer(parentElement);
+    this.renderer.renderCharacter(parentElement);
   }
 
   public update() {

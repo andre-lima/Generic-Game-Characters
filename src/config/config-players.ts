@@ -1,4 +1,4 @@
-export const players = {
+export const characters = {
   warrior: {
     maxHealth: 100,
     maxSpecial: 50,

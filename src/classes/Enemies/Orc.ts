@@ -1,11 +1,11 @@
-import { Player } from "../Player/Player";
+import { Character } from "../Character/Character";
 import { ClassWeakness } from "../interfaces/interfaces";
 import { normalSword } from "../Inventory/items/attack/sword.item";
 import { normalArmor } from "../Inventory/items/defense/armor.item";
 import { powerAttack } from "../Specials/powerAttack.special";
 import orcImage from "../../images/characters/orc.jpg";
 
-export class Orc extends Player {
+export class Orc extends Character {
   
   public classWeakness: ClassWeakness = {
     damageType: "holy",

@@ -1,10 +1,10 @@
-import { Player } from "../Player/Player";
+import { Character } from "../Character/Character";
 import { normalMace } from "../Inventory/items/attack/mace.item";
 import { normalArmor } from "../Inventory/items/defense/armor.item";
 import { heal } from "../Specials/heal.special";
 import clericImage from "../../images/characters/cleric.jpg";
 
-export class Cleric extends Player {
+export class Cleric extends Character {
   
   constructor(
     name: string,

@@ -1,7 +1,7 @@
 TODO
 ---------------------------
 
-# Generic Players
+# Generic Characters
 Define character sheet in a config json
 
 ## Characters
@@ -40,7 +40,7 @@ When it finishes, handles winner/loser
 
 ## Currency
 x Money for the Party
-x Define money drop for each player (min, max and percentage)
+x Define money drop for each character (min, max and percentage)
 
 
 ## Display

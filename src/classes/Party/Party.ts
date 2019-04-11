@@ -1,14 +1,14 @@
 import { sample, remove, filter } from "lodash";
-import { Player } from "../Player/Player";
+import { Character } from "../Character/Character";
 
 export class Party {
-  public partyMembers: Player[];
-  public alivePartyMembers: Player[];
+  public partyMembers: Character[];
+  public alivePartyMembers: Character[];
 
-  public enemyMembers: Player[];
-  public aliveEnemyMembers: Player[];
+  public enemyMembers: Character[];
+  public aliveEnemyMembers: Character[];
 
-  constructor(members: Player[]) {
+  constructor(members: Character[]) {
     this.partyMembers = [...members];
     this.alivePartyMembers = [...members];
 
@@ -17,27 +17,27 @@ export class Party {
     });
   }
 
-  public setEnemyMembers(members: Player[]) {
+  public setEnemyMembers(members: Character[]) {
     this.enemyMembers = members;
   }
 
-  public getRandomMember(): Player {
+  public getRandomMember(): Character {
     return sample(this.members);
   }
 
-  public getRandomEnemy(): Player {
+  public getRandomEnemy(): Character {
     return sample(filter(this.enemyMembers, member => !member.isDead));
   }
 
-  public get members(): Player[] {
+  public get members(): Character[] {
     return this.partyMembers;
   }
 
-  public get enemies(): Player[] {
+  public get enemies(): Character[] {
     return this.enemyMembers;
   }
 
-  public removeDeadMember(member: Player): void {
+  public removeDeadMember(member: Character): void {
     this.alivePartyMembers = this.alivePartyMembers.filter((member) => {
       return !member.isDead;
     })

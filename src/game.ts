@@ -35,7 +35,7 @@ const enemy4 = new Skeleton("BONES", "skeleton", 30, 0);
 const goodParty = new Party([warrior1, cleric1, wizard1]);
 const badParty = new Party([enemy1, enemy2, enemy3, enemy4]);
 
-// warrior2.healPlayer(55);
+// warrior2.healCharacter(55);
 // console.log(party.getRandomMember());
 
 // party.attackAllMembers(100);
@@ -43,8 +43,8 @@ const badParty = new Party([enemy1, enemy2, enemy3, enemy4]);
 
 // warrior1.specialAttack();
 
-// warrior1.showPlayer('warrior1');
-// warrior2.showPlayer('warrior2');
+// warrior1.showCharacter('warrior1');
+// warrior2.showCharacter('warrior2');
 
 // warrior1.attack(enemy2, { damage: 50, type: "normal" });
 // warrior2.attack(enemy1, { damage: 50, type: "normal" });
@@ -57,7 +57,7 @@ const badParty = new Party([enemy1, enemy2, enemy3, enemy4]);
 // enemy2.heal(33);
 
 const combat = new Combat(goodParty, badParty);
-combat.placePlayers("game");
+combat.placeCharacters("game");
 
 const success_cb = (p) => {
   console.log('success', p)
