@@ -1,19 +1,19 @@
 import { Player } from "../Player/Player";
-import { normalMace } from "../Inventory/items/mace.item";
-import { normalArmor } from "../Inventory/items/armor.item";
+import { normalMace } from "../Inventory/items/attack/mace.item";
+import { normalArmor } from "../Inventory/items/defense/armor.item";
 import { heal } from "../Specials/heal.special";
+import clericImage from "../../images/characters/cleric.jpg";
 
 export class Cleric extends Player {
   
   constructor(
-    image: string,
     name: string,
     type: string,
     health: number,
     special: number,
     leader: boolean = false
   ) {
-    super(image, name, type, health, special, leader);
+    super(clericImage, name, type, health, special, leader);
     this.init();
   }
 

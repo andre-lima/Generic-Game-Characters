@@ -35,7 +35,7 @@ Slime
 Skeleton
 Zombie
 
-## Combate
+## Combat
 When it finishes, handles winner/loser
 
 ## Currency

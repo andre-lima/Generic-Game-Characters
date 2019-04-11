@@ -1,6 +1,6 @@
 import { Attack, ClassWeakness } from "../interfaces/interfaces";
 import { Party } from "../Party/Party";
-import { Inventory } from "../Inventory";
+import { Inventory } from "../Inventory/Inventory";
 import { renderPlayer_DOM } from "./view/player.dom-renderer";
 
 
@@ -8,6 +8,7 @@ export abstract class Player {
   //////// Player properties
 
   // Character sheet
+  public characterImage: string;
   private playerName: string;
   private playerType: string;
   private playerHealth: number;
@@ -40,6 +41,8 @@ export abstract class Player {
     special: number,
     leader: boolean = false
   ) {
+    this.characterImage = imageSource;
+    console.log(this.characterImage);
     this.playerName = name;
     this.playerType = type;
 
@@ -56,7 +59,7 @@ export abstract class Player {
 
     this.inventory = new Inventory();
 
-    this.renderer = renderPlayer_DOM(this);
+    this.renderer = new renderPlayer_DOM(this);
   }
 
   // Getters and Setters

@@ -1,4 +1,4 @@
-import { Armor } from "../../interfaces/interfaces";
+import { Armor } from "../../../interfaces/interfaces";
 
 export const normalArmor: Armor = {
   defense: 100,

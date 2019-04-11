@@ -1,6 +1,8 @@
 import { Player } from "../Player/Player";
 import { ClassWeakness } from "../interfaces/interfaces";
-import { normalClub } from "../Inventory/items/club.item";
+import { normalClub } from "../Inventory/items/attack/club.item";
+import { bones } from "../Inventory/items/defense/bones.item";
+import skeletonImage from "../../images/characters/skeleton.jpg";
 
 export class Skeleton extends Player {
   
@@ -10,14 +12,13 @@ export class Skeleton extends Player {
   };
 
   constructor(
-    image: string,
     name: string,
     type: string,
     health: number,
     special: number,
     leader: boolean = false
   ) {
-    super(image, name, type, health, special, leader);
+    super(skeletonImage, name, type, health, special, leader);
 
     this.init();
   }
@@ -26,5 +27,6 @@ export class Skeleton extends Player {
     super.init();
 
     this.inventory.weapon = normalClub;
+    this.inventory.armor = bones;
   }
 }

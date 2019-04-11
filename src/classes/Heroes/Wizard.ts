@@ -1,22 +1,22 @@
 import { Player } from "../Player/Player";
 import { Attack } from "../interfaces/interfaces";
-import { normalStaff } from "../Inventory/items/staff.item";
-import { normalRobe } from "../Inventory/items/robe.item";
+import { normalStaff } from "../Inventory/items/attack/staff.item";
+import { normalRobe } from "../Inventory/items/defense/robe.item";
 import { fireBall } from "../Specials/fireBall.special";
+import wizardImage from "../../images/characters/wizard.gif";
 
 export class Wizard extends Player {
 
   private special: Attack;
 
   constructor(
-    image: string,
     name: string,
     type: string,
     health: number,
     special: number,
     leader: boolean = false
   ) {
-    super(image, name, type, health, special, leader);
+    super(wizardImage, name, type, health, special, leader);
     this.init();
   }
 

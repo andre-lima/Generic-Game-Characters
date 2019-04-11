@@ -1,8 +1,9 @@
 import { Player } from "../Player/Player";
 import { ClassWeakness } from "../interfaces/interfaces";
-import { normalSword } from "../Inventory/items/sword.item";
-import { normalArmor } from "../Inventory/items/armor.item";
+import { normalSword } from "../Inventory/items/attack/sword.item";
+import { normalArmor } from "../Inventory/items/defense/armor.item";
 import { powerAttack } from "../Specials/powerAttack.special";
+import orcImage from "../../images/characters/orc.jpg";
 
 export class Orc extends Player {
   
@@ -12,14 +13,13 @@ export class Orc extends Player {
   };
 
   constructor(
-    image: string,
     name: string,
     type: string,
     health: number,
     special: number,
     leader: boolean = false
   ) {
-    super(image, name, type, health, special, leader);
+    super(orcImage, name, type, health, special, leader);
 
     this.init();
   }

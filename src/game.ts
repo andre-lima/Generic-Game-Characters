@@ -6,24 +6,20 @@ import { Combat } from "./classes/Combat/Combat";
 import { Orc } from "./classes/Enemies/Orc";
 import { Skeleton } from "./classes/Enemies/Skeleton";
 import { DialogBox } from "./services/view/dialogBox.service";
-import characterImages from "./images/characters/*.*";
 
 const warrior1 = new Warrior(
-  characterImages.warrior1.jpg,
   "dude awesome",
   "warrior",
   100,
   50,
 );
 const cleric1 = new Cleric(
-  characterImages.cleric.jpg,
   "mehdude",
   "cleric",
   80,
   80,
 );
 const wizard1 = new Wizard(
-  characterImages.wizard.gif,
   "girl power",
   "cleric",
   60,
@@ -31,10 +27,10 @@ const wizard1 = new Wizard(
   true
 );
 
-const enemy1 = new Orc(characterImages.orc.jpg, "EVEEELLLL", "orc", 70, 50);
-const enemy2 = new Orc(characterImages.orc.jpg, "BADDDD", "orc", 70, 50);
-const enemy3 = new Orc(characterImages.orc.jpg, "UGLYYYYY", "orc", 100, 50, true);
-const enemy4 = new Skeleton(characterImages.skeleton.jpg, "BONES", "skeleton", 30, 0);
+const enemy1 = new Orc("EVEEELLLL", "orc", 70, 50);
+const enemy2 = new Orc("BADDDD", "orc", 70, 50);
+const enemy3 = new Orc("UGLYYYYY", "orc", 100, 50, true);
+const enemy4 = new Skeleton("BONES", "skeleton", 30, 0);
 
 const goodParty = new Party([warrior1, cleric1, wizard1]);
 const badParty = new Party([enemy1, enemy2, enemy3, enemy4]);
