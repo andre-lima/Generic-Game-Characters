@@ -4,11 +4,12 @@ import { Attack, ClassWeakness } from "../../interfaces/interfaces";
 
 export class CharacterModel {
 
+  // Attributes
   public characterImage: string;
   public characterName: string;
   public characterType: string;
   public characterHealth: number;
-  private maxHealth: number;
+  public maxHealth: number;
   public characterLevel: number;
   public xp: number;
   public classWeakness: ClassWeakness = { damageType: "none" };
@@ -16,8 +17,8 @@ export class CharacterModel {
   
   // Special Attack
   public specialPower: any;
-  private maxSpecial: number;
-  private specialCharge: number;
+  public maxSpecial: number;
+  public specialCharge: number;
 
   constructor(
     imageSource: string,
@@ -31,14 +32,9 @@ export class CharacterModel {
     this.isLeader = leader;
 
     const config = charactersConfig[type];
-    console.log(config);
 
     this.maxHealth = this.characterHealth = config.maxHealth;
     this.maxSpecial = config.maxSpecial;
     this.specialCharge = 0;
-  }
-
-  public initialAttributes(type: string): any {
-    return charactersConfig[type];
   }
 }

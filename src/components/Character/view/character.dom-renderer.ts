@@ -2,7 +2,7 @@ import { characterTemplate } from "./character.template";
 import { Character } from "../Character";
 import { VisualEffectsController as VE } from "../../VisualEffects/VisualEffects";
 
-export class renderCharacter_DOM {
+export class RenderCharacter_DOM {
   
   private characterElement: Element;
   private characterImage: string;

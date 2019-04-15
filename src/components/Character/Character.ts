@@ -1,7 +1,7 @@
 import { Attack, ClassWeakness } from "../interfaces/interfaces";
 import { Party } from "../Party/Party";
 import { Inventory } from "../Inventory/Inventory";
-import { renderCharacter_DOM } from "./view/character.dom-renderer";
+import { RenderCharacter_DOM } from "./view/character.dom-renderer";
 import { CharacterModel } from "./model/character.model";
 
 
@@ -9,7 +9,7 @@ export abstract class Character {
   //////// Character properties
 
   // Model
-  public model: CharacterModel;
+  public characterAttributes: CharacterModel;
 
   // Special Attack
   public specialPower: any;
@@ -40,7 +40,7 @@ export abstract class Character {
     // this.maxSpecial = special;
     // this.isLeader = leader;
 
-    this.model = new CharacterModel(imageSource, name, type, leader);
+    this.characterAttributes = new CharacterModel(imageSource, name, type, leader);
   }
 
   protected init() {
@@ -48,37 +48,40 @@ export abstract class Character {
 
     this.inventory = new Inventory();
 
-    this.renderer = new renderCharacter_DOM(this);
+    this.renderer = new RenderCharacter_DOM(this);
   }
 
   // Getters and Setters
   public get health(): number {
-    return this.model.characterHealth;
+    return this.characterAttributes.characterHealth;
   }
 
   public set health(newHealth: number) {
-    this.model.characterHealth = newHealth;
+    this.characterAttributes.characterHealth = newHealth;
   }
 
   public get maxHealth(): number {
-    return this.model.maxHealth;
+    return this.characterAttributes.maxHealth;
   }
 
   public set specialCharge(amount: number) {
-    this.model.specialCharge = amount;
+    this.characterAttributes.specialCharge = amount;
   }
 
   public get specialCharge(): number {
-    return this.model.specialCharge;
+    return this.characterAttributes.specialCharge;
   }
 
   public get maxSpecial(): number {
-    return this.model.maxSpecial;
+    return this.characterAttributes.maxSpecial;
   }
 
-
   public get characterName(): string {
-    return this.model.characterName;
+    return this.characterAttributes.characterName;
+  }
+
+  public get characterImage(): string {
+    return this.characterAttributes.characterImage;
   }
 
   public get isDead(): boolean {
@@ -90,7 +93,7 @@ export abstract class Character {
   }
 
   // Attack logic
-  public regularAttack(): Attack {
+  private regularAttack(): Attack {
     return {
       damage: this.inventory.weapon.damage,
       damageType: this.inventory.weapon.damageType
@@ -99,7 +102,7 @@ export abstract class Character {
 
   public attack(target?: Character | Character[], attack?: Attack): number {
     if (!attack) {
-      attack = this.regularAttack(); // TODO: Get default attack
+      attack = this.regularAttack();
     }
 
     if (!target) {
@@ -118,9 +121,7 @@ export abstract class Character {
   }
 
   public useSpecial(target?: Character | Character[]): number {
-    this.specialPower();
-
-    return 0;
+    return this.specialPower();
   }
 
   private attackSingleCharacter(target: Character, attack: Attack): number {
@@ -136,7 +137,7 @@ export abstract class Character {
     return totalDamage;
   }
 
-  private chargeSpecial(amount: number): void {
+  public chargeSpecial(amount: number): void {
     this.specialCharge = Math.min(this.specialCharge + amount, this.maxSpecial);
   }
 
@@ -157,11 +158,11 @@ export abstract class Character {
     return calculatedDamage;
   }
 
-  public calculateDamage(attack: Attack): number {
+  private calculateDamage(attack: Attack): number {
     let finalDamage = attack.damage;
 
-    if (attack.damageType !== "none" && attack.damageType === this.classWeakness.damageType) {
-      finalDamage *= (1 + this.classWeakness.damageIncrease);
+    if (attack.damageType !== "none" && attack.damageType === this.characterAttributes.classWeakness.damageType) {
+      finalDamage *= (1 + this.characterAttributes.classWeakness.damageIncrease);
     }
 
     if (attack.damageType !== "none" && attack.damageType === this.inventory.armor.damageType) {
