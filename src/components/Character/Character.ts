@@ -2,26 +2,17 @@ import { Attack, ClassWeakness } from "../interfaces/interfaces";
 import { Party } from "../Party/Party";
 import { Inventory } from "../Inventory/Inventory";
 import { renderCharacter_DOM } from "./view/character.dom-renderer";
+import { CharacterModel } from "./model/character.model";
 
 
 export abstract class Character {
   //////// Character properties
 
-  // Character sheet
-  public characterImage: string;
-  private characterName: string;
-  private characterType: string;
-  private characterHealth: number;
-  private maxHealth: number;
-  private characterLevel: number;
-  public xp: number;
-  public classWeakness: ClassWeakness = { damageType: "none" };
-  private isLeader: boolean;
-  
+  // Model
+  public model: CharacterModel;
+
   // Special Attack
   public specialPower: any;
-  private maxSpecial: number;
-  private specialCharge: number;
   
   // Inventory
   protected inventory: Inventory;
@@ -37,23 +28,22 @@ export abstract class Character {
     imageSource: string,
     name: string,
     type: string,
-    health: number,
-    special: number,
     leader: boolean = false
   ) {
-    this.characterImage = imageSource;
-    this.characterName = name;
-    this.characterType = type;
+    // this.characterImage = imageSource;
+    // this.characterName = name;
+    // this.characterType = type;
 
-    this.characterHealth = health;
-    this.maxHealth = health;
+    // this.characterHealth = health;
+    // this.maxHealth = health;
 
-    this.maxSpecial = special;
-    this.isLeader = leader;
+    // this.maxSpecial = special;
+    // this.isLeader = leader;
+
+    this.model = new CharacterModel(imageSource, name, type, leader);
   }
 
   protected init() {
-    this.specialCharge = 0;
     this.specialPower = null;
 
     this.inventory = new Inventory();
@@ -63,11 +53,32 @@ export abstract class Character {
 
   // Getters and Setters
   public get health(): number {
-    return this.characterHealth;
+    return this.model.characterHealth;
   }
 
   public set health(newHealth: number) {
-    this.characterHealth = newHealth;
+    this.model.characterHealth = newHealth;
+  }
+
+  public get maxHealth(): number {
+    return this.model.maxHealth;
+  }
+
+  public set specialCharge(amount: number) {
+    this.model.specialCharge = amount;
+  }
+
+  public get specialCharge(): number {
+    return this.model.specialCharge;
+  }
+
+  public get maxSpecial(): number {
+    return this.model.maxSpecial;
+  }
+
+
+  public get characterName(): string {
+    return this.model.characterName;
   }
 
   public get isDead(): boolean {

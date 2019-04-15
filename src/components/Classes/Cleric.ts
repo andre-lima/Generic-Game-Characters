@@ -9,11 +9,9 @@ export class Cleric extends Character {
   constructor(
     name: string,
     type: string,
-    health: number,
-    special: number,
     leader: boolean = false
   ) {
-    super(clericImage, name, type, health, special, leader);
+    super(clericImage, name, type, leader);
     this.init();
   }
 

@@ -14,11 +14,9 @@ export class Skeleton extends Character {
   constructor(
     name: string,
     type: string,
-    health: number,
-    special: number,
     leader: boolean = false
   ) {
-    super(skeletonImage, name, type, health, special, leader);
+    super(skeletonImage, name, type, leader);
 
     this.init();
   }

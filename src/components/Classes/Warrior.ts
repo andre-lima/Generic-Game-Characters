@@ -1,26 +1,18 @@
 import { Character } from "../Character/Character";
-import { ClassWeakness } from "../interfaces/interfaces";
+import { Attack } from "../interfaces/interfaces";
 import { normalSword } from "../Inventory/items/attack/sword.item";
 import { normalArmor } from "../Inventory/items/defense/armor.item";
 import { powerAttack } from "../Specials/powerAttack.special";
-import orcImage from "../../images/characters/orc.jpg";
+import warriorImage from "../../images/characters/warrior.jpg";
 
-export class Orc extends Character {
-  
-  public classWeakness: ClassWeakness = {
-    damageType: "holy",
-    damageIncrease: 0.3
-  };
+export class Warrior extends Character {
 
   constructor(
     name: string,
     type: string,
-    health: number,
-    special: number,
     leader: boolean = false
   ) {
-    super(orcImage, name, type, health, special, leader);
-
+    super(warriorImage, name, type, leader);
     this.init();
   }
 
@@ -28,7 +20,9 @@ export class Orc extends Character {
     super.init();
 
     this.inventory.weapon = normalSword;
+    this.inventory.armor = normalArmor;
 
-    this.specialPower = powerAttack.bind(this, 50, 1.5);
+    this.specialPower = powerAttack.bind(this, 50, 2);
   }
+
 }

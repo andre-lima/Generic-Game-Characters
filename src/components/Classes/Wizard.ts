@@ -12,11 +12,9 @@ export class Wizard extends Character {
   constructor(
     name: string,
     type: string,
-    health: number,
-    special: number,
     leader: boolean = false
   ) {
-    super(wizardImage, name, type, health, special, leader);
+    super(wizardImage, name, type, leader);
     this.init();
   }
 

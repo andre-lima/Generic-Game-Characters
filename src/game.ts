@@ -1,36 +1,30 @@
-import { Warrior } from "./classes/Heroes/Warrior";
-import { Wizard } from "./classes/Heroes/Wizard";
-import { Cleric } from "./classes/Heroes/Cleric";
-import { Party } from "./classes/Party/Party";
-import { Combat } from "./classes/Combat/Combat";
-import { Orc } from "./classes/Enemies/Orc";
-import { Skeleton } from "./classes/Enemies/Skeleton";
+import { Warrior } from "./components/Classes/Warrior";
+import { Wizard } from "./components/Classes/Wizard";
+import { Cleric } from "./components/Classes/Cleric";
+import { Party } from "./components/Party/Party";
+import { Combat } from "./components/Combat/Combat";
+import { Orc } from "./components/Classes/Orc";
+import { Skeleton } from "./components/Classes/Skeleton";
 import { DialogBox } from "./services/view/dialogBox.service";
 
 const warrior1 = new Warrior(
   "dude awesome",
-  "warrior",
-  100,
-  50,
+  "warrior"
 );
 const cleric1 = new Cleric(
   "mehdude",
-  "cleric",
-  80,
-  80,
+  "cleric"
 );
 const wizard1 = new Wizard(
   "girl power",
-  "cleric",
-  60,
-  100,
+  "wizard",
   true
 );
 
-const enemy1 = new Orc("EVEEELLLL", "orc", 70, 50);
-const enemy2 = new Orc("BADDDD", "orc", 70, 50);
-const enemy3 = new Orc("UGLYYYYY", "orc", 100, 50, true);
-const enemy4 = new Skeleton("BONES", "skeleton", 30, 0);
+const enemy1 = new Orc("EVEEELLLL", "orc");
+const enemy2 = new Orc("BADDDD", "orc");
+const enemy3 = new Orc("UGLYYYYY", "orc", true);
+const enemy4 = new Skeleton("BONES", "skeleton");
 
 const goodParty = new Party([warrior1, cleric1, wizard1]);
 const badParty = new Party([enemy1, enemy2, enemy3, enemy4]);
