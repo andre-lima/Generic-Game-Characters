@@ -30,16 +30,6 @@ export abstract class Character {
     type: string,
     leader: boolean = false
   ) {
-    // this.characterImage = imageSource;
-    // this.characterName = name;
-    // this.characterType = type;
-
-    // this.characterHealth = health;
-    // this.maxHealth = health;
-
-    // this.maxSpecial = special;
-    // this.isLeader = leader;
-
     this.characterAttributes = new CharacterModel(imageSource, name, type, leader);
   }
 

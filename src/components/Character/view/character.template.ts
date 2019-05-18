@@ -4,7 +4,7 @@ export function characterTemplate(compilingData: any) {
   
   var source = 
     `<div class='character'>
-      <img src={{characterImage}} alt='character' class='characterImage hidden'>
+      <img src={{characterImage}} alt='character' class='characterImage'>
       <div id='js_characterParameters' class='characterParameters'>
         <div class='characterName'>{{characterName}}</div>
         <div class='characterHealth'>{{characterHealth}} / {{maxHealth}}</div>
