@@ -1,4 +1,8 @@
-TODO
+# Launching
+
+`npm run start`
+
+# TODO
 ---------------------------
 
 # Generic Characters
