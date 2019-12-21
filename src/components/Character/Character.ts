@@ -4,33 +4,41 @@ import { Inventory } from "../Inventory/Inventory";
 import { RenderCharacter_DOM } from "./view/character.dom-renderer";
 import { CharacterModel } from "./model/character.model";
 
-
 export abstract class Character {
   //////// Character properties
 
   // Model
   public characterAttributes: CharacterModel;
+  private characterLevel: number;
 
   // Special Attack
   public specialPower: any;
-  
+
   // Inventory
   protected inventory: Inventory;
-  
+
   // State
   private dead: boolean = false;
   private myParty: Party;
 
   // Render
   private renderer: any;
-  
+
   constructor(
     imageSource: string,
     name: string,
     type: string,
+    level: number = 1,
     leader: boolean = false
   ) {
-    this.characterAttributes = new CharacterModel(imageSource, name, type, leader);
+    this.characterLevel = level;
+
+    this.characterAttributes = new CharacterModel(
+      imageSource,
+      name || type.toUpperCase(),
+      type,
+      leader
+    );
   }
 
   protected init() {
@@ -82,6 +90,14 @@ export abstract class Character {
     this.myParty = party;
   }
 
+  public get level(): number {
+    return this.characterLevel;
+  }
+
+  public set level(l: number) {
+    this.characterLevel = l;
+  }
+
   // Attack logic
   private regularAttack(): Attack {
     return {
@@ -118,7 +134,10 @@ export abstract class Character {
     return target.receiveAttack(attack, this);
   }
 
-  private attackMultipleCharacters(targets: Character[], attack: Attack): number {
+  private attackMultipleCharacters(
+    targets: Character[],
+    attack: Attack
+  ): number {
     let totalDamage = 0;
     targets.forEach(target => {
       totalDamage += target.receiveAttack(attack, this);
@@ -143,7 +162,7 @@ export abstract class Character {
       this.die();
     }
 
-    this.postEffects('damage');
+    this.postEffects("damage");
 
     return calculatedDamage;
   }
@@ -151,12 +170,18 @@ export abstract class Character {
   private calculateDamage(attack: Attack): number {
     let finalDamage = attack.damage;
 
-    if (attack.damageType !== "none" && attack.damageType === this.characterAttributes.classWeakness.damageType) {
-      finalDamage *= (1 + this.characterAttributes.classWeakness.damageIncrease);
+    if (
+      attack.damageType !== "none" &&
+      attack.damageType === this.characterAttributes.classWeakness.damageType
+    ) {
+      finalDamage *= 1 + this.characterAttributes.classWeakness.damageIncrease;
     }
 
-    if (attack.damageType !== "none" && attack.damageType === this.inventory.armor.damageType) {
-      finalDamage *= (1 - this.inventory.armor.damageReduction);
+    if (
+      attack.damageType !== "none" &&
+      attack.damageType === this.inventory.armor.damageType
+    ) {
+      finalDamage *= 1 - this.inventory.armor.damageReduction;
     }
 
     finalDamage -= this.inventory.armor.defense;
@@ -181,10 +206,10 @@ export abstract class Character {
 
     this.dead = true;
     this.myParty.removeDeadMember(this);
-    
-    this.postEffects('death', 200);
+
+    this.postEffects("death", 200);
   }
-  
+
   private postEffects(type: string, delay: number = 0): void {
     this.renderer.renderPostEffects(type, delay);
   }

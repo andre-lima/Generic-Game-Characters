@@ -5,8 +5,9 @@ export class Party {
   public partyMembers: Character[];
   public alivePartyMembers: Character[];
 
-  public enemyMembers: Character[];
-  public aliveEnemyMembers: Character[];
+  private enemyParty: Party;
+  // public enemyMembers: Character[];
+  // public aliveEnemyMembers: Character[];
 
   constructor(members: Character[]) {
     this.partyMembers = [...members];
@@ -17,8 +18,8 @@ export class Party {
     });
   }
 
-  public setEnemyMembers(members: Character[]) {
-    this.enemyMembers = members;
+  public setEnemyParty(enemyParty: Party) {
+    this.enemyParty = enemyParty;
   }
 
   public getRandomMember(): Character {
@@ -26,7 +27,7 @@ export class Party {
   }
 
   public getRandomEnemy(): Character {
-    return sample(filter(this.enemyMembers, member => !member.isDead));
+    return sample(filter(this.enemyParty.members, member => !member.isDead));
   }
 
   public get members(): Character[] {
@@ -34,13 +35,13 @@ export class Party {
   }
 
   public get enemies(): Character[] {
-    return this.enemyMembers;
+    return this.enemyParty.members;
   }
 
   public removeDeadMember(member: Character): void {
-    this.alivePartyMembers = this.alivePartyMembers.filter((member) => {
+    this.alivePartyMembers = this.alivePartyMembers.filter(member => {
       return !member.isDead;
-    })
+    });
   }
 
   public areAllMembersDead(): boolean {
@@ -55,6 +56,14 @@ export class Party {
     this.members.forEach(member => {
       member.render(element);
     });
+  }
+
+  public partyLevel() {
+    const levelSum = this.members.reduce(
+      (sum: number, m: Character) => m.level + sum,
+      0
+    );
+    return levelSum;
   }
 
   public update() {

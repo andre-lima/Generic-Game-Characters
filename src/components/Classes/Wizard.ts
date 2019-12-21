@@ -6,15 +6,10 @@ import { fireBall } from "../Specials/fireBall.special";
 import wizardImage from "../../images/characters/wizard.gif";
 
 export class Wizard extends Character {
-
   private special: Attack;
 
-  constructor(
-    name: string,
-    type: string,
-    leader: boolean = false
-  ) {
-    super(wizardImage, name, type, leader);
+  constructor(leader: boolean = false, level: number = 1, name: string = "") {
+    super(wizardImage, name, "wizard", level, leader);
     this.init();
   }
 
@@ -26,5 +21,4 @@ export class Wizard extends Character {
 
     this.specialPower = fireBall.bind(this, 70, 30);
   }
-
 }

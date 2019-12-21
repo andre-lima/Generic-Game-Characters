@@ -6,13 +6,8 @@ import { powerAttack } from "../Specials/powerAttack.special";
 import warriorImage from "../../images/characters/warrior.jpg";
 
 export class Warrior extends Character {
-
-  constructor(
-    name: string,
-    type: string,
-    leader: boolean = false
-  ) {
-    super(warriorImage, name, type, leader);
+  constructor(leader: boolean = false, level: number = 1, name: string = "") {
+    super(warriorImage, name, "warrior", level, leader);
     this.init();
   }
 
@@ -24,5 +19,4 @@ export class Warrior extends Character {
 
     this.specialPower = powerAttack.bind(this, 50, 2);
   }
-
 }

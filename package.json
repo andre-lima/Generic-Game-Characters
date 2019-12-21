@@ -11,12 +11,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "parcel": "^1.12.3",
-    "sass": "^1.17.4",
-    "typescript": "^3.4.2"
+    "parcel": "^1.12.4",
+    "sass": "^1.23.7",
+    "typescript": "^3.7.3"
   },
   "dependencies": {
-    "handlebars": "^4.1.1",
-    "lodash": "^4.17.11"
+    "handlebars": "^4.5.3",
+    "lodash": "^4.17.15"
   }
 }

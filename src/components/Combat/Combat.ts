@@ -1,7 +1,6 @@
 import { Party } from "../Party/Party";
 
 export class Combat {
-
   private heroesParty: Party;
   private enemyParty: Party;
   private battleActive: boolean;
@@ -10,16 +9,16 @@ export class Combat {
     this.heroesParty = yourParty;
     this.enemyParty = enemyParty;
 
-    this.heroesParty.setEnemyMembers(this.enemyParty.members);
-    this.enemyParty.setEnemyMembers(this.heroesParty.members);
+    this.heroesParty.setEnemyParty(this.enemyParty);
+    this.enemyParty.setEnemyParty(this.heroesParty);
 
     this.battleActive = true;
   }
 
   public placeCharacters(id: string): void {
     const gameCanvas = document.getElementById(id);
-    const enemiesSpot = document.createElement('div');
-    const myPartySpot = document.createElement('div');
+    const enemiesSpot = document.createElement("div");
+    const myPartySpot = document.createElement("div");
 
     gameCanvas.appendChild(enemiesSpot);
     gameCanvas.appendChild(myPartySpot);
@@ -31,19 +30,18 @@ export class Combat {
   private checkEndOfBattle(): void {
     if (this.battleActive) {
       if (this.heroesParty.areAllMembersDead()) {
-        console.log('ENEMIES victory');
+        console.log("ENEMIES victory");
         this.battleActive = false;
       } else if (this.enemyParty.areAllMembersDead()) {
-        console.log('HEROES victory');
+        console.log("HEROES victory");
         this.battleActive = false;
       }
     } else {
-      console.log('END OF BATTLE');
+      console.log("END OF BATTLE");
     }
   }
 
   public update(): void {
     this.checkEndOfBattle();
   }
-
 }
