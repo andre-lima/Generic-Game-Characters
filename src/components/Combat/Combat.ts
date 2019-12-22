@@ -1,4 +1,5 @@
 import { Party } from "../Party/Party";
+import { Character } from "../Character/Character";
 
 export class Combat {
   private heroesParty: Party;
@@ -34,6 +35,13 @@ export class Combat {
         this.battleActive = false;
       } else if (this.enemyParty.areAllMembersDead()) {
         console.log("HEROES victory");
+        this.heroesParty.alivePartyMembers.forEach((member: Character) => {
+          console.log(
+            this.enemyParty.partyLevel(),
+            this.heroesParty.partyLevel()
+          );
+          member.xp += 100;
+        });
         this.battleActive = false;
       }
     } else {

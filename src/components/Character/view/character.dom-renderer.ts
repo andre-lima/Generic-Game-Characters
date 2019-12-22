@@ -28,7 +28,8 @@ export class RenderCharacter_DOM {
       hasSpecial: !!this.character.specialPower,
       specialCharge: this.character.specialCharge,
       maxSpecial: this.character.maxSpecial,
-      level: this.character.level
+      level: this.character.level,
+      xp: this.character.xp
     });
 
     this.healthBarElement = this.characterElement.getElementsByClassName(

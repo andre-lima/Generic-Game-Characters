@@ -24,7 +24,7 @@ const enemy4 = new Skeleton(false, 4, "BONES");
 const goodParty = new Party([warrior1, cleric1, wizard1]);
 const badParty = new Encounter().generateEnemies(true, 4); //new Party([enemy1, enemy2, enemy3, enemy4]);
 console.log(
-  "AVG LEVEL",
+  "LEVEL SUM",
   goodParty.partyLevel() + " vs " + badParty.partyLevel()
 );
 
@@ -32,10 +32,6 @@ console.log(
 // Combat setup
 const combat = new Combat(goodParty, badParty);
 combat.placeCharacters("game");
-
-// -------------------
-// Random encounter
-const encounter = new Encounter();
 
 // -------------------
 // Notification

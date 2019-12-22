@@ -10,6 +10,8 @@ export abstract class Character {
   // Model
   public characterAttributes: CharacterModel;
   private characterLevel: number;
+  private experience: number;
+  private characterAccuracy: number;
 
   // Special Attack
   public specialPower: any;
@@ -32,6 +34,10 @@ export abstract class Character {
     leader: boolean = false
   ) {
     this.characterLevel = level;
+    this.characterAccuracy = level;
+
+    // Minimal XP to be on given level.
+    this.experience = this.calculateXp(Math.max(level - 1, 0));
 
     this.characterAttributes = new CharacterModel(
       imageSource,
@@ -96,6 +102,45 @@ export abstract class Character {
 
   public set level(l: number) {
     this.characterLevel = l;
+  }
+
+  public get xp(): number {
+    return this.experience;
+  }
+
+  public set xp(xp: number) {
+    this.experience = xp;
+
+    this.calculateLevel();
+  }
+
+  public get accuracy(): number {
+    return this.characterLevel;
+  }
+
+  private calculateLevel() {
+    // 2: 8
+    // 3: 32
+    // 4: 72
+    // 5: 128
+    // 6: 200
+    // 7: 288
+
+    const xpNeededToLvlUp = this.calculateXp(this.characterLevel);
+
+    if (xpNeededToLvlUp <= this.experience) {
+      // Reverting formula. We can't just ++ because it wouldn't account for a player leveling up more than 1 lvl at a time.
+      this.characterLevel = Math.floor(Math.sqrt(this.experience / 8));
+      this.levelingUp();
+    }
+  }
+
+  private calculateXp(level) {
+    return 8 * level ** 2;
+  }
+
+  private levelingUp() {
+    console.log(this.characterName, " is now level ", this.characterLevel);
   }
 
   // Attack logic
