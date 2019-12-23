@@ -2,7 +2,7 @@ import { Attack, ClassWeakness } from "../interfaces/interfaces";
 import { Party } from "../Party/Party";
 import { Inventory } from "../Inventory/Inventory";
 import { RenderCharacter_DOM } from "./view/character.dom-renderer";
-import { charactersConfig } from "../../config/config-characters";
+import { charactersConfig } from "../config/config-characters";
 
 export abstract class Character {
   //////// Character properties
@@ -68,7 +68,7 @@ export abstract class Character {
     this.characterMaxSpecial = this.config.maxSpecial;
     this.characterSpecialCharge = 0;
 
-    this.weakness = { damageType: "normal" };
+    this.weakness = this.config.weakness || { };
   }
 
   protected init() {
@@ -82,6 +82,9 @@ export abstract class Character {
     this.specialPower = null;
 
     this.inventory = new Inventory();
+
+    this.inventory.weapon = this.config.initialWeapon;
+    this.inventory.armor = this.config.initialArmor;
 
     this.renderer = new RenderCharacter_DOM(this);
   }

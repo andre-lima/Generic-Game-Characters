@@ -1,7 +1,7 @@
 import { Armor } from "../../../interfaces/interfaces";
 
-export const normalArmor: Armor = {
-  defense: 20,
-  damageType: "none",
+export const bones: Armor = {
+  defense: 2,
+  damageType: "normal",
   damageReduction: 0
 };
