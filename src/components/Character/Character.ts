@@ -2,30 +2,34 @@ import { Attack, ClassWeakness } from "../interfaces/interfaces";
 import { Party } from "../Party/Party";
 import { Inventory } from "../Inventory/Inventory";
 import { RenderCharacter_DOM } from "./view/character.dom-renderer";
-import { CharacterModel } from "./model/character.model";
+import { charactersConfig } from "../../config/config-characters";
 
 export abstract class Character {
   //////// Character properties
 
   // Model
-  public characterAttributes: CharacterModel;
+  public type: string;
   private characterLevel: number;
   private experience: number;
   private characterAccuracy: number;
+  private config;
 
   // Health
-  protected initialHealth = 30;
-  protected healthLvlMultiplier = 5;
-  protected healthLvlExponent = 2;
-  protected maxCharacterHealth = 30;
+  protected initialHealth;
+  protected healthLvlMultiplier;
+  protected healthLvlExponent;
+  protected maxCharacterHealth;
   private characterHealth;
+  private weakness: ClassWeakness;
 
   // Leveling Up
-  private exponent = 2;
-  private multiplier = 8;
+  private lvlExponent: number;
+  private lvlMultiplier: number;
 
   // Special Attack
   public specialPower: any;
+  private characterSpecialCharge: any;
+  private characterMaxSpecial: any;
 
   // Inventory
   protected inventory: Inventory;
@@ -44,18 +48,27 @@ export abstract class Character {
     level: number = 1,
     leader: boolean = false
   ) {
+    this.config = charactersConfig[type];
+
+    this.type = type;
+
+    this.lvlExponent = this.config.levelExponent;
+    this.lvlMultiplier = this.config.levelMultiplier;
+
     this.characterLevel = level;
     this.characterAccuracy = level;
 
     // Minimal XP to be on given level.
     this.experience = this.calculateNeededXp(Math.max(level - 1, 0));
 
-    this.characterAttributes = new CharacterModel(
-      imageSource,
-      name || type.toUpperCase(),
-      type,
-      leader
-    );
+    this.healthLvlMultiplier = this.config.healthMultiplier;
+    this.healthLvlExponent = this.config.healthExponent;
+    this.initialHealth = this.config.initialHealth;
+
+    this.characterMaxSpecial = this.config.maxSpecial;
+    this.characterSpecialCharge = 0;
+
+    this.weakness = { damageType: "normal" };
   }
 
   protected init() {
@@ -87,23 +100,15 @@ export abstract class Character {
   }
 
   public set specialCharge(amount: number) {
-    this.characterAttributes.specialCharge = amount;
+    this.characterSpecialCharge = amount;
   }
 
   public get specialCharge(): number {
-    return this.characterAttributes.specialCharge;
+    return this.characterSpecialCharge;
   }
 
   public get maxSpecial(): number {
-    return this.characterAttributes.maxSpecial;
-  }
-
-  public get characterName(): string {
-    return this.characterAttributes.characterName;
-  }
-
-  public get characterImage(): string {
-    return this.characterAttributes.characterImage;
+    return this.characterMaxSpecial;
   }
 
   public get isDead(): boolean {
@@ -143,7 +148,7 @@ export abstract class Character {
       this.characterLevel =
         1 +
         Math.floor(
-          Math.pow(this.experience / this.multiplier, 1 / this.exponent)
+          Math.pow(this.experience / this.lvlMultiplier, 1 / this.lvlExponent)
         );
 
       this.levelingUp();
@@ -151,11 +156,11 @@ export abstract class Character {
   }
 
   private calculateNeededXp(level) {
-    return this.multiplier * Math.pow(level, this.exponent);
+    return this.lvlMultiplier * Math.pow(level, this.lvlExponent);
   }
 
   private levelingUp() {
-    console.log(this.characterName, "is now level ", this.characterLevel);
+    console.log(this.type, "is now level ", this.characterLevel);
   }
 
   // Attack logic
@@ -231,14 +236,14 @@ export abstract class Character {
     let finalDamage = attack.damage;
 
     if (
-      attack.damageType !== "none" &&
-      attack.damageType === this.characterAttributes.classWeakness.damageType
+      attack.damageType !== "normal" &&
+      attack.damageType === this.weakness.damageType
     ) {
-      finalDamage *= 1 + this.characterAttributes.classWeakness.damageIncrease;
+      finalDamage *= 1 + this.weakness.damageIncrease;
     }
 
     if (
-      attack.damageType !== "none" &&
+      attack.damageType !== "normal" &&
       attack.damageType === this.inventory.armor.damageType
     ) {
       finalDamage *= 1 - this.inventory.armor.damageReduction;
@@ -262,7 +267,7 @@ export abstract class Character {
 
   // Death logic
   private die(): void {
-    console.log(this.characterName, "is dead!");
+    console.log(this.type, "is dead!");
 
     this.dead = true;
     this.myParty.removeDeadMember(this);

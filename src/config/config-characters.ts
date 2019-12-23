@@ -1,53 +1,59 @@
 export const charactersConfig = {
   warrior: {
-    maxHealth: 100,
+    initialHealth: 100,
+    healthExponent: 2,
+    healthMultiplier: 5,
     maxSpecial: 50,
-    imageSource: '',
-    initialWeapon: 'normalSword',
-    initialArmor: 'normalArmor',
-    givesXp: 100,
-    level: 1
+    imageSource: "",
+    initialWeapon: "normalSword",
+    initialArmor: "normalArmor",
+    levelExponent: 2,
+    levelMultiplier: 8
   },
   wizard: {
-    maxHealth: 60,
+    initialHealth: 60,
+    healthExponent: 2,
+    healthMultiplier: 5,
     maxSpecial: 100,
-    imageSource: '',
-    initialWeapon: 'staff',
-    initialArmor: 'robe',
-    givesXp: 100,
-    level: 1
+    imageSource: "",
+    initialWeapon: "staff",
+    initialArmor: "robe",
+    levelExponent: 2,
+    levelMultiplier: 8
   },
   cleric: {
-    maxHealth: 80,
+    initialHealth: 80,
+    healthExponent: 2,
+    healthMultiplier: 5,
     maxSpecial: 80,
-    imageSource: '',
-    initialWeapon: 'mace',
-    initialArmor: 'normalArmor',
-    givesXp: 100,
-    level: 1
+    imageSource: "",
+    initialWeapon: "mace",
+    initialArmor: "normalArmor",
+    levelExponent: 2,
+    levelMultiplier: 8
   },
   orc: {
-    maxHealth: 120,
+    initialHealth: 120,
+    healthExponent: 2,
+    healthMultiplier: 5,
     maxSpecial: 40,
-    imageSource: '',
-    initialWeapon: 'normalSword',
-    initialArmor: 'normalArmor',
-    givesXp: 100,
-    level: 1
+    imageSource: "",
+    initialWeapon: "normalSword",
+    initialArmor: "normalArmor",
+    levelExponent: 2,
+    levelMultiplier: 8
   },
   skeleton: {
-    maxHealth: 40,
+    initialHealth: 40,
+    healthExponent: 2,
+    healthMultiplier: 5,
     maxSpecial: 0,
-    imageSource: '',
-    initialWeapon: 'normalClub',
-    initialArmor: '',
-    givesXp: 30,
-    level: 1
+    imageSource: "",
+    initialWeapon: "normalClub",
+    initialArmor: "",
+    levelExponent: 2,
+    levelMultiplier: 8
   },
-  zombie: {
-
-  },
-  dragon: {
-
-  }
-}
+  zombie: {},
+  dragon: {}
+};

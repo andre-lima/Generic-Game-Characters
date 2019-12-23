@@ -21,8 +21,7 @@ export class RenderCharacter_DOM {
     this.characterElement = document.createElement("div");
 
     this.characterElement.innerHTML = characterTemplate({
-      characterImage: this.character.characterImage,
-      characterName: this.character.characterName,
+      characterName: this.character.type.toUpperCase(),
       characterHeath: this.character.health,
       maxHealth: this.character.maxHealth,
       hasSpecial: !!this.character.specialPower,

@@ -6,8 +6,6 @@ import { powerAttack } from "../Specials/powerAttack.special";
 import orcImage from "../../images/characters/orc.jpg";
 
 export class Orc extends Character {
-  protected initialHealth = 120;
-
   public classWeakness: ClassWeakness = {
     damageType: "holy",
     damageIncrease: 0.3

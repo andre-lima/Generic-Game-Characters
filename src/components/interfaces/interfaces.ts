@@ -1,6 +1,6 @@
 
 interface DamageModifiers {
-  damageType?: "none" | "holy" | "fire" | "cold" | "poison" | "stun";
+  damageType?: "normal" | "holy" | "fire" | "cold" | "poison" | "stun";
 }
 
 export interface ProtectionAgainst extends DamageModifiers {
