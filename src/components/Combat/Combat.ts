@@ -35,18 +35,20 @@ export class Combat {
         this.battleActive = false;
       } else if (this.enemyParty.areAllMembersDead()) {
         console.log("HEROES victory");
-        this.heroesParty.alivePartyMembers.forEach((member: Character) => {
-          console.log(
-            this.enemyParty.partyLevel(),
-            this.heroesParty.partyLevel()
-          );
-          member.xp += 100;
-        });
+        this.distributeXp();
         this.battleActive = false;
       }
     } else {
       console.log("END OF BATTLE");
     }
+  }
+
+  private distributeXp() {
+    this.heroesParty.alivePartyMembers.forEach((member: Character) => {
+      member.xp += Math.ceil(
+        this.enemyParty.partyLevel() / this.heroesParty.alivePartyMembers.length
+      );
+    });
   }
 
   public update(): void {

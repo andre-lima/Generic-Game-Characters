@@ -10,19 +10,19 @@ import { Encounter } from "./components/Combat/Encounter";
 
 // -------------------
 // Characters setup
-const warrior1 = new Warrior(false, 2, "dude awesome");
-const cleric1 = new Cleric(false, 2, "holy girl");
-const wizard1 = new Wizard(true, 3, "artritis");
+const warrior1 = new Warrior(1, "dude awesome");
+const cleric1 = new Cleric(2, "holy girl");
+const wizard1 = new Wizard(3, "artritis");
 
-const enemy1 = new Orc(false, 1, "EVEEELLLL");
-const enemy2 = new Orc(false, 2, "BADDDD");
-const enemy3 = new Orc(true, 3, "UGLYYYYY");
-const enemy4 = new Skeleton(false, 4, "BONES");
+const enemy1 = new Orc(1, "EVEEELLLL");
+const enemy2 = new Orc(2, "BADDDD");
+const enemy3 = new Orc(3, "UGLYYYYY");
+const enemy4 = new Skeleton(4, "BONES");
 
 // -------------------
 // Party setup
 const goodParty = new Party([warrior1, cleric1, wizard1]);
-const badParty = new Encounter().generateEnemies(true, 4); //new Party([enemy1, enemy2, enemy3, enemy4]);
+const badParty = new Encounter().generateRandomEnemies(3, 10, 2); //new Party([enemy1, enemy2, enemy3, enemy4]);
 console.log(
   "LEVEL SUM",
   goodParty.partyLevel() + " vs " + badParty.partyLevel()
@@ -59,7 +59,7 @@ const dialogActions = [
   { text: "Stuff", callback: stuff_cb, closeModal: false }
 ];
 
-dialogBox.showDialogBox("New item", "Check this new item out!", dialogActions);
+// dialogBox.showDialogBox("New item", "Check this new item out!", dialogActions);
 
 // -------------------
 // Game loop

@@ -5,13 +5,15 @@ import { bones } from "../Inventory/items/defense/bones.item";
 import skeletonImage from "../../images/characters/skeleton.jpg";
 
 export class Skeleton extends Character {
+  protected initialHealth = 40;
+
   public classWeakness: ClassWeakness = {
     damageType: "holy",
     damageIncrease: 0.8
   };
 
-  constructor(leader: boolean = false, level: number = 1, name: string = "") {
-    super(skeletonImage, name, "skeleton", level, leader);
+  constructor(level: number = 1, name: string = "") {
+    super(skeletonImage, name, "skeleton", level);
 
     this.init();
   }

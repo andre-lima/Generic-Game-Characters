@@ -5,8 +5,10 @@ import { heal } from "../Specials/heal.special";
 import clericImage from "../../images/characters/cleric.jpg";
 
 export class Cleric extends Character {
-  constructor(leader: boolean = false, level: number = 1, name: string = "") {
-    super(clericImage, name, "cleric", level, leader);
+  protected initialHealth = 80;
+
+  constructor(level: number = 1, name: string = "") {
+    super(clericImage, name, "cleric", level);
     this.init();
   }
 

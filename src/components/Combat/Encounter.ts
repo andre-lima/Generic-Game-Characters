@@ -9,31 +9,41 @@ export class Encounter {
 
   constructor() {}
 
-  public generateEnemies(
-    isRandom: boolean = true,
+  public generateRandomEnemies(
     amount: number = 3,
-    types: string[] = []
+    level: number = 1,
+    levelVariation: number = 0,
+    allowedTypes: string[] = []
   ) {
-    if (isRandom) {
-      types = [];
+    const types = [];
+    const onlyUseTypes = allowedTypes.length
+      ? this.supportedTypes.filter(type => allowedTypes.includes(type))
+      : [...this.supportedTypes];
 
-      while (types.length < amount) {
-        types.push(
-          this.supportedTypes[
-            Math.floor(Math.random() * this.supportedTypes.length)
-          ]
-        );
-      }
+    if (onlyUseTypes.length === 0) {
+      console.error(
+        "Your desired types are not supported.",
+        this.supportedTypes,
+        allowedTypes
+      );
+    }
+
+    while (types.length < amount) {
+      types.push(onlyUseTypes[Math.floor(Math.random() * onlyUseTypes.length)]);
     }
 
     types.forEach(type => {
+      const useLevel = Math.round(
+        level + (Math.random() - 0.5) * 2 * levelVariation
+      );
+
       let e: Character;
       switch (type) {
         case "orc":
-          e = new Orc();
+          e = new Orc(useLevel);
           break;
         case "skeleton":
-          e = new Skeleton();
+          e = new Skeleton(useLevel);
           break;
 
         default:
