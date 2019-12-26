@@ -7,12 +7,30 @@ export function characterTemplate(compilingData: any) {
         <div class='characterHealth'>{{characterHealth}} / {{maxHealth}}</div>
         {{#if hasSpecial}}<div class='characterSpecial'>{{specialCharge}} / {{maxSpecial}}</div>{{/if}}
       </div>
-      <div class='controls'>
+      <div>
+        <div>
+          wpn: {{inventory.weapon.name}} {{inventory.weapon.damage}}
+        </div>
+        <div>
+          rmr: {{inventory.armor.name}} {{inventory.armor.defense}}
+        </div>
+        <div>
+          shd: {{inventory.shield.name}} {{inventory.shield.defense}}
+        </div>
+      </div>
+    </div>`;
+
+  var template = handlebars.compile(source);
+
+  return template(compilingData);
+}
+
+export function controlsTemplate(compilingData: any) {
+  var source = `<div class='controls'>
         <button class='attackButton'>Attack</button>
         {{#if hasSpecial}}<button class='specialButton'>Special!</button>
         <button class='chargeSpecialButton'>Charge</button>{{/if}}
-      </div>
-    </div>`;
+      </div>`;
 
   var template = handlebars.compile(source);
 

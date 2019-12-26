@@ -1,10 +1,11 @@
 export function heal(
   usageDepletion: number = 40,
-  healingAmount: number = 50
+  defenseIncrease: number = 40
 ): void {
   if (this.specialCharge < usageDepletion) return;
 
   this.specialCharge -= usageDepletion;
 
-  this.heal(healingAmount);
+  // TODO
+  // this.inventory.armor = defenseIncrease;
 }

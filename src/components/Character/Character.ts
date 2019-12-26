@@ -4,11 +4,12 @@ import { Inventory } from "../Inventory/Inventory";
 import { RenderCharacter_DOM } from "./view/character.dom-renderer";
 import { charactersConfig } from "../config/config-characters";
 
-export abstract class Character {
+export class Character {
   //////// Character properties
 
   // Model
   public type: string;
+  public name: string;
   private characterLevel: number;
   private experience: number;
   private characterAccuracy: number;
@@ -32,7 +33,7 @@ export abstract class Character {
   private characterMaxSpecial: any;
 
   // Inventory
-  protected inventory: Inventory;
+  protected characterInventory: Inventory;
 
   // State
   private dead: boolean = false;
@@ -41,16 +42,12 @@ export abstract class Character {
   // Render
   private renderer: any;
 
-  constructor(
-    imageSource: string,
-    name: string,
-    type: string,
-    level: number = 1,
-    leader: boolean = false
-  ) {
+  constructor(type: string, level: number = 1, name: string = "") {
     this.config = charactersConfig[type];
 
     this.type = type;
+
+    this.name = name || type;
 
     this.lvlExponent = this.config.levelExponent;
     this.lvlMultiplier = this.config.levelMultiplier;
@@ -61,30 +58,34 @@ export abstract class Character {
     // Minimal XP to be on given level.
     this.experience = this.calculateNeededXp(Math.max(level - 1, 0));
 
-    this.healthLvlMultiplier = this.config.healthMultiplier;
-    this.healthLvlExponent = this.config.healthExponent;
-    this.initialHealth = this.config.initialHealth;
+    this.weakness = this.config.weakness || {};
 
-    this.characterMaxSpecial = this.config.maxSpecial;
-    this.characterSpecialCharge = 0;
+    this.specialPower = this.config.special;
 
-    this.weakness = this.config.weakness || { };
+    this.init();
   }
 
   protected init() {
-    this.characterHealth =
-      this.initialHealth +
-      this.healthLvlMultiplier *
-        Math.pow(this.level - 1, this.healthLvlExponent);
+    this.characterHealth = Math.ceil(
+      this.config.initialHealth +
+        this.config.healthMultiplier *
+          Math.pow(this.level - 1, this.config.healthExponent)
+    );
 
     this.maxCharacterHealth = this.characterHealth;
 
-    this.specialPower = null;
+    this.characterSpecialCharge = 0;
+    this.characterMaxSpecial = Math.ceil(
+      this.config.initialMaxSpecial +
+        this.config.specialMultiplier *
+          Math.pow(this.level - 1, this.config.specialExponent)
+    );
 
-    this.inventory = new Inventory();
+    this.characterInventory = new Inventory();
 
-    this.inventory.weapon = this.config.initialWeapon;
-    this.inventory.armor = this.config.initialArmor;
+    this.inventory.weapon = this.config?.initialWeapon;
+    this.inventory.armor = this.config?.initialArmor;
+    this.inventory.shield = this.config?.initialShield;
 
     this.renderer = new RenderCharacter_DOM(this);
   }
@@ -137,6 +138,10 @@ export abstract class Character {
   public set xp(xp: number) {
     this.experience = xp;
     this.calculateLevel();
+  }
+
+  public get inventory(): Inventory {
+    return this.characterInventory;
   }
 
   public get accuracy(): number {
@@ -230,8 +235,6 @@ export abstract class Character {
       this.die();
     }
 
-    this.postEffects("damage");
-
     return calculatedDamage;
   }
 
@@ -252,7 +255,9 @@ export abstract class Character {
       finalDamage *= 1 - this.inventory.armor.damageReduction;
     }
 
-    finalDamage -= this.inventory.armor.defense;
+    finalDamage -=
+      (this.inventory.armor?.defense || 0) -
+      (this.inventory.shield?.defense || 0);
 
     return Math.max(Math.ceil(finalDamage), 0);
   }
@@ -274,12 +279,6 @@ export abstract class Character {
 
     this.dead = true;
     this.myParty.removeDeadMember(this);
-
-    this.postEffects("death", 200);
-  }
-
-  private postEffects(type: string, delay: number = 0): void {
-    this.renderer.renderPostEffects(type, delay);
   }
 
   public update() {

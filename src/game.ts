@@ -1,23 +1,21 @@
-import { Warrior } from "./components/Classes/Warrior";
-import { Wizard } from "./components/Classes/Wizard";
-import { Cleric } from "./components/Classes/Cleric";
 import { Party } from "./components/Party/Party";
 import { Combat } from "./components/Combat/Combat";
-import { Orc } from "./components/Classes/Orc";
-import { Skeleton } from "./components/Classes/Skeleton";
 import { DialogBox } from "./services/view/dialogBox.service";
 import { Encounter } from "./components/Combat/Encounter";
+import { Character } from "./components/Character/Character";
+import { twoHandedSword } from "./components/items/attack/swords.item";
+import { woodenShield } from "./components/items/defense/shields.item";
 
 // -------------------
 // Characters setup
-const warrior1 = new Warrior(1, "dude awesome");
-const cleric1 = new Cleric(2, "holy girl");
-const wizard1 = new Wizard(3, "artritis");
+const warrior1 = new Character("warrior", 1, "Wehr Ior");
+const cleric1 = new Character("cleric", 2, "Klor Ik");
+const wizard1 = new Character("wizard", 3, "Uiz Erd");
 
-const enemy1 = new Orc(1, "EVEEELLLL");
-const enemy2 = new Orc(2, "BADDDD");
-const enemy3 = new Orc(3, "UGLYYYYY");
-const enemy4 = new Skeleton(4, "BONES");
+const enemy1 = new Character("orc", 1);
+const enemy2 = new Character("orc", 1);
+const enemy3 = new Character("orc", 1);
+const enemy4 = new Character("skeleton", 1);
 
 // -------------------
 // Party setup
@@ -32,6 +30,15 @@ console.log(
 // Combat setup
 const combat = new Combat(goodParty, badParty);
 combat.placeCharacters("game");
+
+setTimeout(() => {
+  // warrior1.inventory.weapon = twoHandedSword;
+}, 2000);
+
+setTimeout(() => {
+  // warrior1.inventory.shield = woodenShield;
+  cleric1.inventory.shield = woodenShield;
+}, 7000);
 
 // -------------------
 // Notification

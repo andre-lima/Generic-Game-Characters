@@ -1,4 +1,4 @@
-@import './geecss/all';
+@import "./geecss/all";
 
 button {
   @include button($size: small, $style: alert);
@@ -8,14 +8,18 @@ button {
 #game > div {
   display: flex;
   justify-content: center;
-  
+
   img {
     width: 200px;
   }
 }
 
 .character {
-  padding: 20px;
+  padding: 40px 20px 0 20px;
+}
+
+.controls {
+  padding: 0 20px;
 }
 
 .hidden {
@@ -24,7 +28,6 @@ button {
 
 .dialogBox {
   @include modal($has-overlay: false, $max-width: 500px, $modal-padding: 20px) {
-      @include basic-container ($padding: null, $distance-from-sibling: 10px);
+    @include basic-container($padding: null, $distance-from-sibling: 10px);
   }
 }
-

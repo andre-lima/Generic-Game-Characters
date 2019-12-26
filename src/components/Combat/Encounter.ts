@@ -37,18 +37,8 @@ export class Encounter {
         level + (Math.random() - 0.5) * 2 * levelVariation
       );
 
-      let e: Character;
-      switch (type) {
-        case "orc":
-          e = new Orc(useLevel);
-          break;
-        case "skeleton":
-          e = new Skeleton(useLevel);
-          break;
+      let e: Character = new Character(type, useLevel);
 
-        default:
-          break;
-      }
       this.enemies.push(e);
     });
 

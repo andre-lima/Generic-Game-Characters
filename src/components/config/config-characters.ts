@@ -6,62 +6,98 @@ import warriorImage from "../../images/characters/warrior.jpg";
 import clericImage from "../../images/characters/cleric.jpg";
 
 // Weapons
-import { normalSword } from "../items/attack/sword.item";
-import { normalStaff } from "../items/attack/staff.item";
-import { normalMace } from "../items/attack/mace.item";
-import { normalClub } from "../items/attack/club.item";
+import {
+  shortSword,
+  broadSword,
+  twoHandedSword
+} from "../items/attack/swords.item";
+import {
+  shortDagger,
+  longDagger,
+  serratedBlade
+} from "../items/attack/daggers.item";
+import { normalStaff } from "../items/attack/staves.item";
+import { normalMace } from "../items/attack/maces.item";
+import { normalClub } from "../items/attack/clubs.item";
 
 // Armors
-import { normalArmor } from "../items/defense/armor.item";
-import { bones } from "../items/defense/bones.item";
-import { normalRobe } from "../items/defense/robe.item";
+import {
+  bones,
+  normalRobe,
+  leatherArmor,
+  bearFur,
+  dragonScale
+} from "../items/defense/armors.item";
+import {
+  woodenShield,
+  ironShield,
+  towerShield
+} from "../items/defense/shields.item";
+
+// Specials
+import { heal } from "../Specials/heal.special";
+import { powerAttack } from "../Specials/powerAttack.special";
+import { fireBall } from "../Specials/fireBall.special";
 
 export const charactersConfig = {
   warrior: {
     initialHealth: 100,
-    healthExponent: 2,
     healthMultiplier: 5,
-    maxSpecial: 50,
-    imageSource: "",
-    initialWeapon: normalSword,
-    initialArmor: normalArmor,
-    levelExponent: 2,
+    healthExponent: 2,
     levelMultiplier: 8,
+    levelExponent: 2,
+    initialMaxSpecial: 50,
+    specialMultiplier: 10,
+    specialExponent: 1.1,
+    imageSource: "",
+    initialWeapon: shortSword,
+    initialArmor: leatherArmor,
+    initialShield: woodenShield,
+    special: powerAttack,
     weakness: {}
   },
   wizard: {
     initialHealth: 60,
-    healthExponent: 2,
     healthMultiplier: 5,
-    maxSpecial: 100,
+    healthExponent: 2,
+    levelMultiplier: 8,
+    levelExponent: 2,
+    initialMaxSpecial: 100,
+    specialMultiplier: 10,
+    specialExponent: 2.1,
     imageSource: "",
     initialWeapon: normalStaff,
     initialArmor: normalRobe,
-    levelExponent: 2,
-    levelMultiplier: 8
+    special: fireBall
   },
   cleric: {
     initialHealth: 80,
-    healthExponent: 2,
     healthMultiplier: 5,
-    maxSpecial: 80,
+    healthExponent: 2,
+    levelMultiplier: 8,
+    levelExponent: 2,
+    initialMaxSpecial: 80,
+    specialMultiplier: 5,
+    specialExponent: 2,
     imageSource: "",
     initialWeapon: normalMace,
-    initialArmor: normalArmor,
-    levelExponent: 2,
-    levelMultiplier: 8
+    initialArmor: leatherArmor,
+    special: heal
   },
   orc: {
     imageSrc: orcImage,
     initialHealth: 120,
-    healthExponent: 2,
     healthMultiplier: 5,
-    maxSpecial: 40,
-    imageSource: "",
-    initialWeapon: normalSword,
-    initialArmor: normalArmor,
-    levelExponent: 2,
+    healthExponent: 2,
     levelMultiplier: 8,
+    levelExponent: 2,
+    initialMaxSpecial: 40,
+    specialMultiplier: 8,
+    specialExponent: 1,
+    imageSource: "",
+    initialWeapon: shortSword,
+    initialArmor: leatherArmor,
+    special: powerAttack,
     weakness: {
       damageType: "fire",
       damageIncrease: 0.3
@@ -69,14 +105,17 @@ export const charactersConfig = {
   },
   skeleton: {
     initialHealth: 40,
-    healthExponent: 2,
     healthMultiplier: 5,
-    maxSpecial: 0,
+    healthExponent: 2,
+    levelMultiplier: 8,
+    levelExponent: 2,
+    initialMaxSpecial: 0,
+    specialMultiplier: 0,
+    specialExponent: 0,
     imageSource: "",
     initialWeapon: normalClub,
     initialArmor: bones,
-    levelExponent: 2,
-    levelMultiplier: 8,
+    special: null,
     weakness: {
       damageType: "holy",
       damageIncrease: 0.3

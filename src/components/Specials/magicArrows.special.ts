@@ -1,16 +1,16 @@
 import { Attack } from "../interfaces/interfaces";
 
-export function fireBall(
-  usageDepletion: number = 70,
-  damage: number = 30
+export function magicArrows(
+  usageDepletion: number = 30,
+  damage: number = 20
 ): void {
   if (this.specialCharge < usageDepletion) return;
 
-  const target = this.myParty.enemies;
+  const target = this.myParty.getRandomEnemy();
 
   const specialAttack: Attack = {
     damage: damage,
-    damageType: "fire"
+    damageType: "normal"
   };
 
   this.specialCharge -= usageDepletion;

@@ -1,6 +1,7 @@
 import { Weapon } from "../../interfaces/interfaces";
 
-export const normalSword: Weapon = {
-  damage: 50,
+export const normalStaff: Weapon = {
+  name: "Staff",
+  damage: 10,
   damageType: "normal"
 };

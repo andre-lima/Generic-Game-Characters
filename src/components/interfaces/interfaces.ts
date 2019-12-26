@@ -1,4 +1,3 @@
-
 interface DamageModifiers {
   damageType?: "normal" | "holy" | "fire" | "cold" | "poison" | "stun";
 }
@@ -15,11 +14,13 @@ export interface Attack extends DamageModifiers {
   damage: number;
 }
 
-
 export interface Weapon extends DamageModifiers {
+  name: string;
   damage: number;
+  doubleHanded?: boolean;
 }
 
 export interface Armor extends ProtectionAgainst {
+  name: string;
   defense: number;
 }
