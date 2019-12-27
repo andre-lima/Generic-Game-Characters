@@ -28,7 +28,7 @@ export class Character {
   private lvlMultiplier: number;
 
   // Special Attack
-  public specialPower: any;
+  public specialPowers: any[] = [];
   private characterSpecialCharge: any;
   private characterMaxSpecial: any;
 
@@ -60,7 +60,10 @@ export class Character {
 
     this.weakness = this.config.weakness || {};
 
-    this.specialPower = this.config.special;
+    // TODO: Make this come from level manager, not config.
+    if (this.config.special) {
+      this.specialPowers.push(this.config.special.bind(this));
+    }
 
     this.init();
   }
@@ -153,7 +156,7 @@ export class Character {
 
     if (xpNeededToLvlUp <= this.experience) {
       // Reverting formula. We can't just ++ because it wouldn't account for a player leveling up more than 1 lvl at a time.
-      this.characterLevel =
+      this.level =
         1 +
         Math.floor(
           Math.pow(this.experience / this.lvlMultiplier, 1 / this.lvlExponent)
@@ -199,8 +202,8 @@ export class Character {
     }
   }
 
-  public useSpecial(target?: Character | Character[]): number {
-    return this.specialPower();
+  public useSpecial(index: number): number {
+    return this.specialPowers[index]();
   }
 
   private attackSingleCharacter(target: Character, attack: Attack): number {

@@ -1,4 +1,4 @@
-export function heal(
+export function thickSkin(
   usageDepletion: number = 40,
   defenseIncrease: number = 40
 ): void {

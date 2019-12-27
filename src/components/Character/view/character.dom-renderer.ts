@@ -11,7 +11,7 @@ export class RenderCharacter_DOM {
   private healthBarElement: Element;
   private specialBarElement: Element;
   private attackButtonElement: Element;
-  private specialButtonElement: Element;
+  private specialButtonElements: Element[];
   private chargeButtonElement: Element;
   public character: Character;
 
@@ -38,7 +38,8 @@ export class RenderCharacter_DOM {
     });
 
     this.controlsElement.innerHTML = controlsTemplate({
-      hasSpecial: !!this.character.specialPower
+      hasSpecial: !!this.character.specialPowers?.length,
+      specials: this.character.specialPowers
     });
 
     this.attackButtonElement = this.controlsElement.getElementsByClassName(
@@ -49,17 +50,20 @@ export class RenderCharacter_DOM {
       this.character.attack()
     );
 
-    if (!!this.character.specialPower) {
-      this.specialButtonElement = this.controlsElement?.getElementsByClassName(
-        "specialButton"
-      )[0];
+    if (!!this.character.specialPowers?.length) {
+      this.specialButtonElements = [
+        ...this.controlsElement?.getElementsByClassName("specialButton")
+      ];
       this.chargeButtonElement = this.controlsElement?.getElementsByClassName(
         "chargeSpecialButton"
       )[0];
 
-      this.specialButtonElement?.addEventListener("click", () =>
-        this.character.useSpecial()
-      );
+      this.specialButtonElements?.forEach((button, index) => {
+        button.addEventListener("click", () =>
+          this.character.useSpecial(index)
+        );
+      });
+
       this.chargeButtonElement?.addEventListener("click", () =>
         this.character.chargeSpecial(20)
       );
@@ -74,7 +78,7 @@ export class RenderCharacter_DOM {
       characterName: this.character.name.toUpperCase(),
       characterHealth: this.character.health,
       maxHealth: this.character.maxHealth,
-      hasSpecial: !!this.character.specialPower,
+      hasSpecial: !!this.character.specialPowers,
       specialCharge: this.character.specialCharge,
       maxSpecial: this.character.maxSpecial,
       level: this.character.level,

@@ -28,8 +28,12 @@ export function characterTemplate(compilingData: any) {
 export function controlsTemplate(compilingData: any) {
   var source = `<div class='controls'>
         <button class='attackButton'>Attack</button>
-        {{#if hasSpecial}}<button class='specialButton'>Special!</button>
-        <button class='chargeSpecialButton'>Charge</button>{{/if}}
+        {{#if hasSpecial}}
+          {{#each specials}}
+            <button class='specialButton'>Special! {{@index}}</button>
+          {{/each}}
+          <button class='chargeSpecialButton'>Charge</button>
+        {{/if}}
       </div>`;
 
   var template = handlebars.compile(source);
