@@ -1,10 +1,23 @@
 import { Party } from "./components/Party/Party";
 import { Combat } from "./components/Combat/Combat";
-import { DialogBox } from "./services/view/dialogBox.service";
+import { ConfirmationBox } from "./services/confirmationBox.service";
 import { Encounter } from "./components/Combat/Encounter";
 import { Character } from "./components/Character/Character";
-import { twoHandedSword } from "./components/items/attack/swords.item";
-import { woodenShield } from "./components/items/defense/shields.item";
+import {
+  twoHandedSword,
+  broadSword
+} from "./components/items/attack/swords.item";
+import {
+  woodenShield,
+  towerShield
+} from "./components/items/defense/shields.item";
+import { Weapon } from "./components/interfaces/interfaces";
+import {
+  confirmSwapItem,
+  alertBox,
+  buyItems
+} from "./services/confirmationActions";
+import { paddedRobe } from "./components/items/defense/armors.item";
 
 // -------------------
 // Characters setup
@@ -21,52 +34,27 @@ const enemy4 = new Character("skeleton", 1);
 // Party setup
 const goodParty = new Party([warrior1, cleric1, wizard1]);
 const badParty = new Encounter().generateRandomEnemies(3, 10, 2); //new Party([enemy1, enemy2, enemy3, enemy4]);
+
 console.log(
   "LEVEL SUM",
   goodParty.partyLevel() + " vs " + badParty.partyLevel()
 );
 
+console.log(goodParty.money + " gold");
+
 // -------------------
 // Combat setup
 const combat = new Combat(goodParty, badParty);
 combat.placeCharacters("game");
-
-setTimeout(() => {
-  // warrior1.inventory.weapon = twoHandedSword;
-}, 2000);
-
-setTimeout(() => {
-  // warrior1.inventory.shield = woodenShield;
-  cleric1.inventory.shield = woodenShield;
-}, 7000);
+// alertBox("Combat Started").then(value => {
+//   alertBox("yooooooooooooooo");
+// });
 
 // -------------------
 // Notification
-
-// Notification button callbacks
-const success_cb = p => {
-  console.log("success", p);
-};
-const cancel_cb = () => {
-  console.log("cancel");
-};
-const stuff_cb = () => {
-  console.log("stuff");
-};
-
-// Notification setup
-const dialogBox = new DialogBox();
-const dialogActions = [
-  {
-    text: "Confirm",
-    callback: success_cb.bind(this, wizard1),
-    closeModal: true
-  },
-  { text: "Cancel", callback: cancel_cb, closeModal: true },
-  { text: "Stuff", callback: stuff_cb, closeModal: false }
-];
-
-// dialogBox.showDialogBox("New item", "Check this new item out!", dialogActions);
+// confirmSwapItem(warrior1, "weapon", twoHandedSword);
+// goodParty.collectMoney(500);
+// buyItems(goodParty, [broadSword, paddedRobe]);
 
 // -------------------
 // Game loop

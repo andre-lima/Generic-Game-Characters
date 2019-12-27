@@ -1,15 +1,20 @@
 import { Weapon, Armor } from "../interfaces/interfaces";
+import { ConfirmationBox } from "../../services/confirmationBox.service";
+import {
+  confirmUnnequipShield,
+  alertBox
+} from "../../services/confirmationActions";
 
 export class Inventory {
   private myWeapon: Weapon;
   private myArmor: Armor;
   private myShield: Armor;
-  private defaultWeapon: Weapon = { damage: 1 };
-  private defaultArmor: Armor = { defense: 0 };
+  private noWeapon: Weapon = { name: "Bare Hands", damage: 1 };
+  private noArmor: Armor = { name: "Naked", defense: 0 };
 
   constructor() {
-    this.armor = this.defaultArmor;
-    this.weapon = this.defaultWeapon;
+    this.armor = this.noArmor;
+    this.weapon = this.noWeapon;
   }
 
   public get weapon(): Weapon {
@@ -18,13 +23,10 @@ export class Inventory {
 
   public set weapon(newWeapon: Weapon) {
     if (newWeapon.doubleHanded && this.shield) {
-      alert(
-        "You unequipped your shield to be able to wield this double handed weapon."
-      );
-      this.shield = null;
+      confirmUnnequipShield(this, newWeapon);
+    } else {
+      this.myWeapon = newWeapon;
     }
-
-    this.myWeapon = newWeapon;
   }
 
   public get armor(): Armor {
@@ -40,8 +42,8 @@ export class Inventory {
   }
 
   public set shield(newShield: Armor) {
-    if (this.weapon.doubleHanded) {
-      alert(
+    if (this.weapon.doubleHanded && newShield) {
+      alertBox(
         "Not possible to equip a shield while wielding a double handed weapon!"
       );
       return;

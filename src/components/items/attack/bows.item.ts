@@ -1,8 +1,8 @@
 import { Weapon } from "../../interfaces/interfaces";
 
-export const normalClub: Weapon = {
-  name: "Club",
-  damage: 20,
+export const shortBow: Weapon = {
+  name: "Short Bow",
+  damage: 40,
   damageType: "normal",
-  price: 20
+  price: 50
 };

@@ -16,6 +16,7 @@ import {
   longDagger,
   serratedBlade
 } from "../items/attack/daggers.item";
+import { shortBow } from "../items/attack/bows.item";
 import { normalStaff } from "../items/attack/staves.item";
 import { normalMace } from "../items/attack/maces.item";
 import { normalClub } from "../items/attack/clubs.item";
@@ -85,7 +86,6 @@ export const charactersConfig = {
     special: heal
   },
   orc: {
-    imageSrc: orcImage,
     initialHealth: 120,
     healthMultiplier: 5,
     healthExponent: 2,
