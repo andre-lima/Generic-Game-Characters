@@ -28,3 +28,10 @@ export interface Armor extends ProtectionAgainst, Purchasable {
   name: string;
   defense: number;
 }
+
+export interface DialogPhase {
+  sentence: string;
+  choices: string[];
+  canContinue: boolean;
+  isFinished: boolean;
+}
