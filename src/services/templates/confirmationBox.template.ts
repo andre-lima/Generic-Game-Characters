@@ -6,7 +6,7 @@ export function confirmationBoxTemplate(compilingData: any) {
     var source = 
     `<div class='confirmationBox modal-is-open'>
       <div class='confirmationBox-container'>
-        <div class='confirmationBox-title'>{{boxTitle}}</div>
+        {{#if hasSpecial}}<div class='confirmationBox-title'>{{boxTitle}}</div>{{/if}}
         <div class='confirmationBox-text'>{{boxText}}</div>
         <div class='confirmationBox-buttons'>
           {{#each buttons}}

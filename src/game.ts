@@ -15,6 +15,7 @@ import { Weapon } from "./components/interfaces/interfaces";
 import {
   confirmSwapItem,
   alertBox,
+  dialogBox,
   buyItems
 } from "./services/confirmationActions";
 import { paddedRobe } from "./components/items/defense/armors.item";
@@ -23,22 +24,25 @@ import { Story } from "inkjs";
 import { Dialog } from "./dialog/Dialog";
 const inkStory = new Dialog(story);
 
-setInterval(() => {
-  let s = inkStory.continueStory();
+// setInterval(() => {
+//   let s = inkStory.continueStory();
 
-  if (s.isFinished) {
-    console.log("Finished");
-    return;
-  }
+//   if (s.isFinished) {
+//     console.log("Finished");
+//     return;
+//   }
 
-  if (s.choices.length) {
-    console.log(s.sentence);
-    console.table(s.choices);
-    inkStory.makeChoice(0);
-  } else if (s.sentence) {
-    console.log(s.sentence);
-  }
-}, 5);
+//   if (s.choices.length) {
+//     console.log(s.sentence);
+//     console.table(s.choices);
+//     inkStory.makeChoice(0);
+//   } else if (s.sentence) {
+//     console.log(s.sentence);
+//   }
+// }, 5);
+
+dialogBox(inkStory);
+
 
 // https://github.com/y-lohse/inkjs/blob/master/templates/browser_with_server/main.js
 

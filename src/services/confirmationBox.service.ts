@@ -12,10 +12,11 @@ export class ConfirmationBox {
     actions?: any[]
   ): Promise<boolean> {
     return new Promise(resolve => {
+
       const buttons = actions.map(action => {
         return {
           buttonText: action.text,
-          id: slugify(action.text),
+          id: action.id || slugify(action.text),
           onClick: action.closeModal
             ? () => {
                 action.callback();
@@ -40,7 +41,7 @@ export class ConfirmationBox {
       buttons.forEach(button => {
         document
           .getElementById("confirmationBox-button_" + button.id)
-          .addEventListener("click", button.onClick);
+          .addEventListener("click", button.onClick, { once: true });
       });
     });
   }

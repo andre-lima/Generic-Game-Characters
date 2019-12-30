@@ -18,6 +18,35 @@ export function alertBox(alertText: string): Promise<boolean> {
   return alertBox.showConfirmationBox("Alert", alertText, alertActions);
 }
 
+export function dialogBox(story: any): void {
+  let s = story.continueStory();
+  let dialogText = s.sentence;
+  let choices = s.choices;
+
+  const dialog = new ConfirmationBox();
+
+  const dialogActions = choices.length === 0 ? [] : choices.map(choice => {
+    return {
+      text: choice.text,
+      id: choice.sourcePath,
+      callback: () => { story.makeChoice(choice.index); dialogBox(story);},
+      closeModal: true
+    }
+  });
+
+  if (s.canContinue && dialogActions.length === 0) {
+    dialogActions.push({
+      text: '...',
+      id: Math.random(),
+      callback: () => { dialogBox(story);},
+      closeModal: true
+    })
+  }
+
+  dialog.showConfirmationBox("", dialogText, dialogActions);
+
+}
+
 export function confirmUnnequipShield(
   inventory: Inventory,
   newWeapon: Weapon

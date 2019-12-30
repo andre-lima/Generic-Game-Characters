@@ -7,7 +7,6 @@ export class Dialog {
 
   constructor(storyContent) {
     this.story = new Story(storyContent);
-    this.continueStory();
   }
 
   public startStory() {}
