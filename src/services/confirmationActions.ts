@@ -25,26 +25,42 @@ export function dialogBox(story: any): void {
 
   const dialog = new ConfirmationBox();
 
-  const dialogActions = choices.length === 0 ? [] : choices.map(choice => {
-    return {
-      text: choice.text,
-      id: choice.sourcePath,
-      callback: () => { story.makeChoice(choice.index); dialogBox(story);},
-      closeModal: true
-    }
-  });
+  const dialogActions =
+    choices.length === 0
+      ? []
+      : choices.map(choice => {
+          return {
+            text: choice.text,
+            id: choice.sourcePath,
+            callback: () => {
+              story.makeChoice(choice.index);
+              dialogBox(story);
+            },
+            closeModal: true
+          };
+        });
 
   if (s.canContinue && dialogActions.length === 0) {
     dialogActions.push({
-      text: '...',
+      text: "...",
       id: Math.random(),
-      callback: () => { dialogBox(story);},
+      callback: () => {
+        dialogBox(story);
+      },
       closeModal: true
-    })
+    });
+  }
+
+  if (s.isFinished) {
+    dialogActions.push({
+      text: "end",
+      id: Math.random(),
+      callback: () => {},
+      closeModal: true
+    });
   }
 
   dialog.showConfirmationBox("", dialogText, dialogActions);
-
 }
 
 export function confirmUnnequipShield(

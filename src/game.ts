@@ -19,30 +19,11 @@ import {
   buyItems
 } from "./services/confirmationActions";
 import { paddedRobe } from "./components/items/defense/armors.item";
-import story from "./dialog/stories/story.json";
-import { Story } from "inkjs";
+import story from "./dialog/stories/demo.json";
 import { Dialog } from "./dialog/Dialog";
 const inkStory = new Dialog(story);
 
-// setInterval(() => {
-//   let s = inkStory.continueStory();
-
-//   if (s.isFinished) {
-//     console.log("Finished");
-//     return;
-//   }
-
-//   if (s.choices.length) {
-//     console.log(s.sentence);
-//     console.table(s.choices);
-//     inkStory.makeChoice(0);
-//   } else if (s.sentence) {
-//     console.log(s.sentence);
-//   }
-// }, 5);
-
 dialogBox(inkStory);
-
 
 // https://github.com/y-lohse/inkjs/blob/master/templates/browser_with_server/main.js
 
