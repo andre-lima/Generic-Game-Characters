@@ -16,7 +16,7 @@
     "typescript": "^3.7.3"
   },
   "dependencies": {
-    "handlebars": "^4.5.3",
+    "handlebars": "^4.7.7",
     "inkjs": "^1.10.2",
     "lodash": "^4.17.15"
   }
